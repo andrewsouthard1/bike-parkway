@@ -1,0 +1,2 @@
+class SavedRide < ApplicationRecord
+end

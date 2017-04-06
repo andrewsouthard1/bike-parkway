@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  starting_location: MyString
+  ending_location: MyString
+  miles: 1
+  in_progress: false
+  finished: false
+
+two:
+  starting_location: MyString
+  ending_location: MyString
+  miles: 1
+  in_progress: false
+  finished: false

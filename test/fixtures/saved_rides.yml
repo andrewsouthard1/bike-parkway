@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ride_id: 1
+  user_id: 1
+  top_five: false
+
+two:
+  ride_id: 1
+  user_id: 1
+  top_five: false
