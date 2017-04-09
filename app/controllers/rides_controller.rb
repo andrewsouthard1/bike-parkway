@@ -17,6 +17,7 @@ class RidesController < ApplicationController
 
   def show
     @ride = Ride.find(params[:id])
+    @ride_info = Unirest.get("http://maps.googleapis.com/maps/api/directions/json?orign=#{@ride.starting_location}&destination=#{@ride.ending_location}&key=#{ENV['API_KEY']}")
     render 'show.html.erb'
   end
 end
