@@ -3,3 +3,7 @@
 <p>ID: <%= @ride.id %></p>
 <p>Starting Location: <%= @ride.starting_location %></p>
 <p>Ending Location: <%= @ride.ending_location %></p>
+
+<% if current_user %>
+  <p>User email: <%= @ride.user.email %></p>
+<% end %>
