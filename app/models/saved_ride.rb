@@ -1,2 +1,0 @@
-class SavedRide < ApplicationRecord
-end
