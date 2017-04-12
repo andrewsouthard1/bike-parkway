@@ -7,5 +7,24 @@
 <% if current_user %>
   <p>User email: <%= @ride.user.email %></p>
 <% end %>
+<div id="map"></div>
+<script>
+  function initMap() {
+    var uluru = {lat: -25.363, lng: 131.044};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+  }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&callback=initMap">
+</script>
 
-<%= @ride_info %>
+<p>Latitude: </p>
+
+<%= @ride_directions %>
