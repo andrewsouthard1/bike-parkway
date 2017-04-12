@@ -10,21 +10,38 @@
 <div id="map"></div>
 <script>
   function initMap() {
-    var uluru = {lat: -25.363, lng: 131.044};
+    var start_input = {
+      lat: <%= @start_latitude %>, 
+      lng: <%= @start_longitude %>
+    };
+    var middle_input = {
+      lat: <%= (@start_latitude + @end_latitude)/2 %>,
+      lng: <%= (@start_longitude + @end_longitude)/2 %>
+
+    };
+    var end_input = {
+      lat: <%= @end_latitude %>,
+      lng: <%= @end_longitude %>
+    };
+
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: uluru
+      zoom: 12,
+      center: middle_input
     });
-    var marker = new google.maps.Marker({
-      position: uluru,
+    var marker1 = new google.maps.Marker({
+      position: start_input,
       map: map
     });
+    var marker2 = new google.maps.Marker({
+      position: end_input,
+      map: map
+    })
   }
 </script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&callback=initMap">
 </script>
 
-<p>Latitude: </p>
+<p>Latitude: <%= @start_latitude %></p>
 
 <%= @ride_directions %>
