@@ -16,5 +16,15 @@
 
 #map {
   height: 400px;
-  width: 100%;
+  width: 50%;
+}
+
+#miles_box {
+  height: 25px;
+  width: 25px;
+}
+
+#directions_box {
+  height: 100px;
+  width: 100px;
 }
