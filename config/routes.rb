@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get '/rides/new' => 'rides#new'
+  get '/' => 'rides#index'
+  get '/rides' => 'rides#index'
   post '/rides' => 'rides#create'
-  get '/rides/:id' => 'rides#show'
 
   get '/signup' => 'users#new'
   post '/users' => 'users#create'

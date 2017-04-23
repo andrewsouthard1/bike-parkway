@@ -15,8 +15,6 @@ function AutocompleteDirectionsHandler(map) {
   this.travelMode = 'BICYCLING';
   var originInput = document.getElementById('origin-input');
   var destinationInput = document.getElementById('destination-input');
-  console.log(originInput);
-  console.log(destinationInput);
   this.directionsService = new google.maps.DirectionsService;
   this.directionsDisplay = new google.maps.DirectionsRenderer;
   this.directionsDisplay.setMap(map);
@@ -26,7 +24,6 @@ function AutocompleteDirectionsHandler(map) {
 
   this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
   this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
   this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
   this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
 }
@@ -62,6 +59,8 @@ function AutocompleteDirectionsHandler(map) {
     travelMode: this.travelMode
   }, function(response, status) {
     if (status === 'OK') {
+      displayMiles(response);
+      console.log(response);
       me.directionsDisplay.setDirections(response);
     } else {
       window.alert('Directions request failed due to ' + status);
@@ -69,6 +68,11 @@ function AutocompleteDirectionsHandler(map) {
   });
   };
 
+function displayMiles(response){
+  var meters = response.routes[0].legs[0].distance.value;
+  var miles = getMiles(meters);
+  document.getElementById('miles_box').innerHTML = '<p>' + miles + " miles" + '</p>';
+}
 
 function getMiles(meters) {
   return (meters * 0.00062137).toFixed(2);
@@ -80,3 +84,8 @@ function getInstructions(stepsArray) {
     stepArray.push(stepsArray[i]['instructions']);
   }
 }
+
+function getWeather(origin) {
+  $.get("http://api.wunderground.com/api/Your_Key/conditions/q/CA/San_Francisco.json");
+}
+
