@@ -85,7 +85,10 @@ function getInstructions(stepsArray) {
   }
 }
 
-function getWeather(origin) {
-  $.get("http://api.wunderground.com/api/Your_Key/conditions/q/CA/San_Francisco.json");
+function getWeather() {
+  var RAILS_ENV = $('#RAILS_ENV_CONSTANT').text();
+  var weatherCall = "http://api.wunderground.com/api/" + RAILS_ENV + "/conditions/q/CA/San_Francisco.json"
+  var weatherData = $.get(weatherCall);
+  console.log(weatherData);
 }
 
