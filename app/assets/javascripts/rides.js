@@ -1,41 +1,82 @@
 function initMap() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.7413549, lng: -73.9980244},
-    zoom: 4
+  var map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeControl: false,
+    center: {lat: 40.730610, lng: -73.935242},
+    zoom: 10
   });
-  directionsService.route({
-    origin: document.getElementById('origin-input'),
-    destination: document.getElementById('destination-input'),
-    travelMode: 'BICYCLING'
+
+  new AutocompleteDirectionsHandler(map);
+}
+
+function AutocompleteDirectionsHandler(map) {
+  this.map = map;
+  this.originPlaceId = null;
+  this.destinationPlaceId = null;
+  this.travelMode = 'BICYCLING';
+  var originInput = document.getElementById('origin-input');
+  var destinationInput = document.getElementById('destination-input');
+  console.log(originInput);
+  console.log(destinationInput);
+  this.directionsService = new google.maps.DirectionsService;
+  this.directionsDisplay = new google.maps.DirectionsRenderer;
+  this.directionsDisplay.setMap(map);
+
+  var originAutocomplete = new google.maps.places.Autocomplete(originInput, {placeIdOnly: true});
+  var destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput, {placeIdOnly: true});
+
+  this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+  this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+}
+
+  AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+  var me = this;
+  autocomplete.bindTo('bounds', this.map);
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    if (!place.place_id) {
+      window.alert("Please select an option from the dropdown list.");
+      return;
+    }
+    if (mode === 'ORIG') {
+      me.originPlaceId = place.place_id;
+    } else {
+      me.destinationPlaceId = place.place_id;
+    }
+    me.route();
+  });
+  };
+
+
+  AutocompleteDirectionsHandler.prototype.route = function() {
+  if (!this.originPlaceId || !this.destinationPlaceId) {
+    return;
+  }
+  var me = this;
+
+  this.directionsService.route({
+    origin: {'placeId': this.originPlaceId},
+    destination: {'placeId': this.destinationPlaceId},
+    travelMode: this.travelMode
   }, function(response, status) {
     if (status === 'OK') {
-      window.alert('this hit');
-      console.log('full response');
-      console.log(response);
-      var meters = response['routes'][0]['legs'][0]['distance']['value'];
-      var miles = getMiles(meters);
-      console.log('directions');
-      var directions = response['routes'][0]['legs'][0]['steps'];
-      var instructions = getInstructions(directions);
-      document.getElementById("miles_count").innerHTML = miles;
-      document.getElementById("steps").innerHTML = directions;
-      directionsDisplay.setDirections(response);
-      directionsDisplay.setMap(map);
+      me.directionsDisplay.setDirections(response);
     } else {
-      window.alert('Directions request failed' + status);
+      window.alert('Directions request failed due to ' + status);
     }
   });
+  };
 
-  function getMiles(meters) {
-    return (meters * 0.00062137).toFixed(2);
-  }
 
-  function getInstructions(stepsArray) {
-    var stepArray = [];
-    for (var i = 0; i < stepsArray.length; i++) {
-      stepArray.push(stepsArray[i]['instructions']);
-    }
+function getMiles(meters) {
+  return (meters * 0.00062137).toFixed(2);
+}
+
+function getInstructions(stepsArray) {
+  var stepArray = [];
+  for (var i = 0; i < stepsArray.length; i++) {
+    stepArray.push(stepsArray[i]['instructions']);
   }
 }
