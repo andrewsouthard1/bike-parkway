@@ -24,12 +24,7 @@
 
 <script>  
 function getWeather(lat, lng) {
-  $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/"+ lat + "," + lng + ".json", function(response) {
-    var weatherStationID = response.location.nearby_weather_stations.pws.station[0].id;
-    $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/pws:" + weatherStationID + ".json", function(response){
-      return response;
-    });
-  });
+  return $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/" + lat + "," + lng + ".json");
 }
 </script>
 

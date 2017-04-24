@@ -87,9 +87,9 @@ function getInstructions(stepsArray) {
 }
 
 function getOriginLat(response) {
-  return response.routes[0].legs[0].start_location.lat();
+  return response.routes[0].legs[0].start_location.lat().toFixed(6);
 }
 
 function getOriginLng(response) {
-  return response.routes[0].legs[0].start_location.lng();
+  return response.routes[0].legs[0].start_location.lng().toFixed(6);
 }
