@@ -10,7 +10,7 @@
   <p>User email: <%= @ride.user.email %></p>
 <% end %>
 
-<div id="miles_box">Miles:<span id="miles_count"></span></div>
+<div id="miles_box"><span id="miles_count"></span></div>
 
 
 <div id="save_ride">
@@ -18,14 +18,24 @@
 </div>
 <hr>
 
-<button onclick="getWeather()">weather</button>
 <div id="map"></div>
 
-<script type="text/javascript">
-  var environment = "<%= Rails.env %>";
+<div id="weather_box"></div>
+
+<script>  
+function getWeather(lat, lng) {
+  $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/"+ lat + "," + lng + ".json", function(response) {
+    var weatherStationID = response.location.nearby_weather_stations.pws.station[0].id;
+    $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/pws:" + weatherStationID + ".json", function(response){
+      return response;
+    });
+  });
+}
 </script>
+
 <script src="rides.js">
 </script>
+
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&libraries=places&callback=initMap">
 </script>

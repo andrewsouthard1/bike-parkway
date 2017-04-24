@@ -60,6 +60,7 @@ function AutocompleteDirectionsHandler(map) {
   }, function(response, status) {
     if (status === 'OK') {
       displayMiles(response);
+      console.log(getWeather(getOriginLat(response), getOriginLng(response)));
       console.log(response);
       me.directionsDisplay.setDirections(response);
     } else {
@@ -68,7 +69,7 @@ function AutocompleteDirectionsHandler(map) {
   });
   };
 
-function displayMiles(response){
+function displayMiles(response) {
   var meters = response.routes[0].legs[0].distance.value;
   var miles = getMiles(meters);
   document.getElementById('miles_box').innerHTML = '<p>' + miles + " miles" + '</p>';
@@ -85,10 +86,10 @@ function getInstructions(stepsArray) {
   }
 }
 
-function getWeather() {
-  var RAILS_ENV = $('#RAILS_ENV_CONSTANT').text();
-  var weatherCall = "http://api.wunderground.com/api/" + RAILS_ENV + "/conditions/q/CA/San_Francisco.json"
-  var weatherData = $.get(weatherCall);
-  console.log(weatherData);
+function getOriginLat(response) {
+  return response.routes[0].legs[0].start_location.lat();
 }
 
+function getOriginLng(response) {
+  return response.routes[0].legs[0].start_location.lng();
+}
