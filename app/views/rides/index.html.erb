@@ -22,12 +22,6 @@
 
 <div id="weather_box"></div>
 
-<script>  
-function getWeather(lat, lng) {
-  return $.get("http://api.wunderground.com/api/<%= ENV['WEATHER_API'] %>/geolookup/q/" + lat + "," + lng + ".json");
-}
-</script>
-
 <script src="rides.js">
 </script>
 

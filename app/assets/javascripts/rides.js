@@ -60,7 +60,7 @@ function AutocompleteDirectionsHandler(map) {
   }, function(response, status) {
     if (status === 'OK') {
       displayMiles(response);
-      console.log(getWeather(getOriginLat(response), getOriginLng(response)));
+      getWeather(getOriginLat(response), getOriginLng(response));
       console.log(response);
       me.directionsDisplay.setDirections(response);
     } else {
@@ -73,6 +73,11 @@ function displayMiles(response) {
   var meters = response.routes[0].legs[0].distance.value;
   var miles = getMiles(meters);
   document.getElementById('miles_box').innerHTML = '<p>' + miles + " miles" + '</p>';
+}
+
+function displayWeather(response) {
+  console.log("displayWeather up")
+
 }
 
 function getMiles(meters) {
@@ -92,4 +97,11 @@ function getOriginLat(response) {
 
 function getOriginLng(response) {
   return response.routes[0].legs[0].start_location.lng().toFixed(6);
+}
+
+function getWeather(lat, lng) {
+  $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response){
+    document.getElementById('weather_box').innerHTML = '<p>' + response.query.results.item.forecast[0] + '</p>';
+    console.log(response);
+  });
 }
