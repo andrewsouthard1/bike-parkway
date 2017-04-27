@@ -101,7 +101,8 @@ function getOriginLng(response) {
 
 function getWeather(lat, lng) {
   $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response){
-    document.getElementById('weather_box').innerHTML = '<p>' + response.query.results.item.forecast[0] + '</p>';
+    var forecast = response.query.results.channel.item.forecast[0];
+    document.getElementById('weather_box').innerHTML = '<p>' + forecast.date + '</p>' + '<p>' + "High: " + forecast.high + '</p>' + '<p>' + "Low: " + forecast.low + '</p>' + '<p>' + forecast.text + '</p>';
     console.log(response);
   });
 }
