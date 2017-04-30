@@ -16,6 +16,16 @@
     <p id="rideMiles"></p>
     <p> Miles</p>
   </div>
+
+  <% if current_user %>
+    <div id="inProgressRide">
+      <% current_user.rides.each do |ride| %>
+        <% if ride.in_progress == true %>
+          <%= ride %>
+        <% end %>
+      <% end %> 
+    </div>
+  <% end %>
   <hr>
 
   <div id="map"></div>

@@ -111,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     el: '#app',
     data: {
       message: 'Hello Vue!',
-      miles: ''
     },
     methods: {
       createRide: function() {
@@ -126,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         };
         $.post('api/v1/rides', parameters, function(response) {
           console.log(response);
+          
         });
       },
     }
