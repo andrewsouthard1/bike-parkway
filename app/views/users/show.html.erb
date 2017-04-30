@@ -1,7 +1,9 @@
-
+<h1>Bike Parkway</h1>
 <%= @user.email %>
 <% @user.rides.each do |ride| %>
   <% if ride.in_progress == true %>
     <%= ride %>
   <% end %>
 <% end %> 
+
+<a href="/rides">Track a New Ride</a>

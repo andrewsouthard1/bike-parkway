@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     el: '#app',
     data: {
       message: 'Hello Vue!',
+      inProgressRides: []
     },
     methods: {
       createRide: function() {
@@ -125,10 +126,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         };
         $.post('api/v1/rides', parameters, function(response) {
           console.log(response);
-          
-        });
+          this.inProgressRides.push(response);
+        }.bind(this));
       },
+    },
+    mounted: function() {
+      console.log("populate rides array with inprogress rides");
     }
+
   });
 });
 
