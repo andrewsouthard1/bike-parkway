@@ -77,11 +77,6 @@ function displayMiles(response) {
   document.getElementById('miles_box').innerHTML = '<p>' + miles + " miles" + '</p>';
 }
 
-function displayWeather(response) {
-  console.log("displayWeather up")
-
-}
-
 function getMiles(meters) {
   return (meters * 0.00062137).toFixed(2);
 }
@@ -118,27 +113,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
     methods: {
       createRide: function() {
         var parameters = {
-          starting_location: "Kansas",
-          ending_location: "Wyoming",
-          miles: 10000,
+          starting_location: this.newOrigin,
+          ending_location: this.newDestination,
+          miles: this.newMiles,
           in_progress: true,
           finished: false,
           user_id: 1,
           top_five: false
-        }
-        $.post('api/v1/rides', function(response){
-          
+        };
+        $.post('api/v1/rides', parameters, function(response){
+          console.log(response);
         });
       },
     }
   });
 });
 
-function showRides() {
-  console.log("showRides() connected");
-  $.get("api/v1/rides", function(response){
-    console.log(response);
-  });
-}
 
 

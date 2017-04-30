@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/rides' => 'rides#index'
+      post '/rides' => 'rides#create'
       get '/rides/:id' => 'rides#show'
     end
   end

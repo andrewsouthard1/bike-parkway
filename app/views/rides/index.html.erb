@@ -1,5 +1,6 @@
 <h1>Bike Parkway</h1>
 
+<div id="app">
 <input id="origin-input" v-model="newOrigin"class="controls" type="text"
     placeholder="Enter an origin location">
 
@@ -10,23 +11,18 @@
   <p>User email: <%= @ride.user.email %></p>
 <% end %>
 
-<div id="miles_box"><span id="miles_count"></span></div>
-
-
-<div id="save_ride">
-  <button>Start My Ride</button>
-</div>
+<div id="miles_box"><span id="miles_count" v-model="newMiles"></span></div>
 <hr>
 
 <div id="map"></div>
 
 <div id="weather_box"></div>
 
-<div id="app">
-  {{ message }}
-</div>
 
-<button onclick="showRides()">Show Rides</button>
+  {{ message }}
+  <button v-on:click="createRide()">Start My Ride</button>
+
+</div>
 
 <script src="rides.js">
 </script>

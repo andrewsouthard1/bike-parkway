@@ -6,16 +6,16 @@ class Api::V1::RidesController < ApplicationController
 
   def create
     @ride = Ride.new(
-      starting_location: "Kansas",
-      ending_location: "Wyoming",
-      miles: 10000,
-      in_progress: true,
-      finished: false,
-      user_id: 1,
-      top_five: false
+      starting_location: params[:starting_location],
+      ending_location: params[:ending_location] ,
+      miles: params[:miles] ,
+      in_progress: params[:in_progress] ,
+      finished: params[:finished] ,
+      user_id: params[:user_id] ,
+      top_five: params[:top_five]
     )
     if @ride.save
-      render 'show.json.jbuilder'
+      render json: @ride 
     else
       render json: {errors: "Didn't save"},
         status: 420
