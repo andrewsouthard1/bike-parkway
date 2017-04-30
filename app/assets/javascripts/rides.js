@@ -74,7 +74,8 @@ function AutocompleteDirectionsHandler(map) {
 function displayMiles(response) {
   var meters = response.routes[0].legs[0].distance.value;
   var miles = getMiles(meters);
-  document.getElementById('miles_box').innerHTML = '<p>' + miles + " miles" + '</p>';
+
+  document.getElementById('miles_box').innerHTML = '<p id="rideMiles">' + miles + " miles" + '</p>';
 }
 
 function getMiles(meters) {
@@ -108,14 +109,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: '#app',
     data: {
-      message: 'Hello Vue!'
+      message: 'Hello Vue!',
+      miles: ''
     },
     methods: {
       createRide: function() {
         var parameters = {
           starting_location: this.newOrigin,
           ending_location: this.newDestination,
-          miles: this.newMiles,
+          miles: document.querySelector('#rideMiles').innerHTML,
           in_progress: true,
           finished: false,
           user_id: 1,
