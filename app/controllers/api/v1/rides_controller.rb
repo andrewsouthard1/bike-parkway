@@ -21,4 +21,9 @@ class Api::V1::RidesController < ApplicationController
         status: 420
     end
   end
+
+  def show
+    @ride = Ride.find_by(id: params[:id])
+    render 'show.json.jbuilder'
+  end
 end
