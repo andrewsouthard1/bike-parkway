@@ -1,3 +1,5 @@
+/* global google */
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
@@ -106,3 +108,37 @@ function getWeather(lat, lng) {
     console.log(response);
   });
 }
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!'
+    },
+    methods: {
+      createRide: function() {
+        var parameters = {
+          starting_location: "Kansas",
+          ending_location: "Wyoming",
+          miles: 10000,
+          in_progress: true,
+          finished: false,
+          user_id: 1,
+          top_five: false
+        }
+        $.post('api/v1/rides', function(response){
+          
+        });
+      },
+    }
+  });
+});
+
+function showRides() {
+  console.log("showRides() connected");
+  $.get("api/v1/rides", function(response){
+    console.log(response);
+  });
+}
+
+
