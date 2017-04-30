@@ -8,10 +8,13 @@
       placeholder="Enter a destination location">
 
   <% if current_user %>
-    <p>User email: <%= @ride.user.email %></p>
+    <p>User email: <%= current_user.email %></p>
+    <p>User id: <span id="user-id"><%= current_user.id %></span></p>
   <% end %>
 
-  <div id="miles_box">
+  <div id="milesBox">
+    <p id="rideMiles"></p>
+    <p> Miles</p>
   </div>
   <hr>
 
