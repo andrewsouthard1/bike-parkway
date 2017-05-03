@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get '/rides' => 'rides#index'
       post '/rides' => 'rides#create'
       get '/rides/:id' => 'rides#show'
+      put '/rides/:id' => 'rides#update'
     end
   end
 

@@ -129,6 +129,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.inProgressRides.push(response);
         }.bind(this));
       },
+      finishRide: function() {
+        console.log("Change ride from in progress to completed");
+        $.ajax({
+          url: 'api/v1/rides/61',
+          method: "PUT",
+          success: function(data) {
+            alert('Load was performed.');
+          }
+        });
+      }
     },
     mounted: function() {
       console.log("populate rides array with inprogress rides");

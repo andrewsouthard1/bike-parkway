@@ -26,4 +26,13 @@ class Api::V1::RidesController < ApplicationController
     @ride = Ride.find_by(id: params[:id])
     render 'show.json.jbuilder'
   end
+
+  def update
+    @ride = Ride.find_by(id: params[:id])
+    Ride.update(
+      in_progress: false,
+      finished: true
+    )
+    render json: {ride: completed}
+  end
 end
