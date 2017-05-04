@@ -140,9 +140,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
       }
     },
-    mounted: function() {
-      console.log("populate rides array with inprogress rides");
-    }
 
   });
 });
