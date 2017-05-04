@@ -7,11 +7,11 @@ class Api::V1::RidesController < ApplicationController
   def create
     @ride = Ride.new(
       starting_location: params[:starting_location],
-      ending_location: params[:ending_location] ,
-      miles: params[:miles] ,
-      in_progress: params[:in_progress] ,
-      finished: params[:finished] ,
-      user_id: params[:user_id] ,
+      ending_location: params[:ending_location],
+      miles: params[:miles],
+      in_progress: params[:in_progress],
+      finished: params[:finished],
+      user_id: params[:user_id],
       top_five: params[:top_five]
     )
     if @ride.save
@@ -28,11 +28,15 @@ class Api::V1::RidesController < ApplicationController
   end
 
   def update
-    @ride = Ride.find_by(id: params[:id])
-    Ride.update(
+    ride = Ride.find_by(id: params[:id])
+    @ride_updated = ride.update(
       in_progress: false,
       finished: true
     )
-    render json: {ride: completed}
+    if @ride_updated
+      render json: {ride: "completed"} 
+    else
+      render json: {error: "error"}, status: 422
+    end
   end
 end

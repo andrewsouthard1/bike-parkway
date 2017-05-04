@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       finishRide: function() {
         console.log("Change ride from in progress to completed");
         $.ajax({
-          url: 'api/v1/rides/61',
+          url: 'api/v1/rides/' + this.inProgressRides[0].id, 
           method: "PUT",
           success: function(data) {
             alert('Load was performed.');
