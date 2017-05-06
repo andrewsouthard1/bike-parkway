@@ -26,9 +26,15 @@ body {
 #map {
   height: 400px;
   width: 80%;
-  border: 2.5px solid white;
-  border-radius: 2px 0 0 2px;
+  border: 2.5px solid black;
+  border-radius: 1%;
   margin: 0 auto;
+}
+
+.login-form {
+  text-align: center;
+  background-color: #282B2A;
+  color: white;
 }
 
 .street-line {
@@ -39,7 +45,7 @@ body {
 .bike-icon {
   float: right;
   margin-right: 10px;
-  margin-top: 2.5px;
+  margin-top: 25px;
 }
 
 /*MAP STYLING*/
@@ -86,6 +92,7 @@ body {
   color: white;
   width: 100%;
   border-radius: 0;
+  border-bottom: 15px solid white;
   opacity: .95;
 }
 

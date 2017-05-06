@@ -1,13 +1,7 @@
 <div id="app">
-  <input id="origin-input" v-model="newOrigin" class="controls" type="text"
-      placeholder="Enter an origin location">
-
-  <input id="destination-input" v-model="newDestination" class="controls" type="text"
-      placeholder="Enter a destination location">
 
   <% if current_user %>
-    <p>User email: <%= current_user.email %></p>
-    <p>User id: <span id="user-id"><%= current_user.id %></span></p>
+    <p>User email: <%= current_user.email %> User id: <span id="user-id"><%= current_user.id %></p>
   <% end %>
 
   <div id="milesBox">
@@ -16,9 +10,14 @@
   </div>
 
   <div>{{ inProgressRides }}<button v-on:click="finishRide()">Change Ride From In Progress To Completed</div>
-  <hr>
 
-  <div id="map"></div>
+  <div id="map">
+    <input id="origin-input" v-model="newOrigin" class="controls" type="text"
+      placeholder="Enter an origin location">
+
+  <input id="destination-input" v-model="newDestination" class="controls" type="text"
+      placeholder="Enter a destination location">
+  </div>
 
   <div id="weather_box"></div>
 
