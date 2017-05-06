@@ -5,8 +5,8 @@
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
-    center: {lat: 40.730610, lng: -73.935242},
-    zoom: 13
+    center: {lat: 40.7829, lng: -73.9654},
+    zoom: 15
   });
 
   new AutocompleteDirectionsHandler(map);

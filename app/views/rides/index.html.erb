@@ -8,15 +8,16 @@
     <p id="rideMiles"></p>
     <p> Miles</p>
   </div>
-
+  <div id="weather_box"></div>
   <div>{{ inProgressRides }}<button v-on:click="finishRide()">Change Ride From In Progress To Completed</div>
 
-  <div id="map">
-    <input id="origin-input" v-model="newOrigin" class="controls" type="text"
+  <input id="origin-input" v-model="newOrigin" class="controls" type="text"
       placeholder="Enter an origin location">
 
   <input id="destination-input" v-model="newDestination" class="controls" type="text"
       placeholder="Enter a destination location">
+
+  <div id="map">
   </div>
 
   <div id="weather_box"></div>

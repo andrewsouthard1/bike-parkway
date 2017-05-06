@@ -19,20 +19,7 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-#app {
-  text-align: center;
-}
-
-#map {
-  height: 400px;
-  width: 80%;
-  border: 2.5px solid black;
-  border-radius: 1%;
-  margin: 0 auto;
-}
-
 .login-form {
-  text-align: center;
   background-color: #282B2A;
   color: white;
 }
@@ -44,40 +31,9 @@ body {
 
 .bike-icon {
   float: right;
-  margin-right: 10px;
-  margin-top: 25px;
+  margin-right: 20px;
+  margin-top: 5px;
 }
-
-/*MAP STYLING*/
-
-.controls {
-  margin-top: 10px;
-  border: 1px solid transparent;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  height: 32px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#origin-input,
-#destination-input {
-  background-color: #fff;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 200px;
-}
-
-#origin-input:focus,
-#destination-input:focus {
-  border-color: #4d90fe;
-}
-
-/*MAP STYLING*/
 
 .header-font {
   font-family: 'Comfortaa', cursive;
@@ -94,6 +50,10 @@ body {
   border-radius: 0;
   border-bottom: 15px solid white;
   opacity: .95;
+}
+
+.color_test {
+  color: white;
 }
 
 .navbar a:link {
@@ -114,14 +74,4 @@ a:hover {
 a:active {
     text-decoration: underline;
     color: white;
-}
-
-#miles_box {
-  height: 25px;
-  width: 25px;
-}
-
-#directions_box {
-  height: 100px;
-  width: 100px;
 }

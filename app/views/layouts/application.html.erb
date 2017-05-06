@@ -11,21 +11,9 @@
   </head>
 
   <body>
-  <nav class="navbar">
+  <nav class="navbar navbar-fixed-top">
     <a class="navbar-brand header-font" href="#">Bike Parkway </a>
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <i class="fa fa-bicycle fa-3x dropdown-toggle bike-icon" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></i>
-          <ul class="dropdown-menu">
-            <% if current_user %>
-            <li><a href="#">Log Out</a></li>
-            <% else %>
-            <li><a href="#">Log In</a></li>
-            <li><a href="#">Sign Out</a></li>    
-            <% end %>
-          </ul>
-        </li>
-    </ul>
+    <a class="navbar-right bike-icon" href="/rides"><i class="fa fa-bicycle fa-3x"></i></a>
   </nav>
     <%= yield %>
   </body>
