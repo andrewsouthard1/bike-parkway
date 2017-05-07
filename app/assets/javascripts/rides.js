@@ -119,7 +119,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 function displayMiles(response) {
   var meters = response.routes[0].legs[0].distance.value;
   var miles = getMiles(meters);
-  document.getElementById('rideMiles').innerHTML = miles + " mi";
+  document.getElementById('rideMiles').innerHTML = miles;
   document.getElementById('milesBox').style.display = 'block';
 }
 
