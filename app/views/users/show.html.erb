@@ -1,8 +1,12 @@
 <div id="app">
-<%= @user.email %>
+  <%= @user.email %>
 
-<div>{{ inProgressRides }}<button class="btn" v-on:click="finishRide()"><i class="fa fa-flag-checkered" aria-hidden="true"></i></div>
-<div id="userMilesBox">
-  38.4 mi
+  <div>{{ inProgressRides }}
+    <button class="btn" v-on:click="finishRide()"><i class="fa fa-flag-checkered" aria-hidden="true"></i>
+  </div>
+  <div id="userMilesBox">
+    38.4 mi
+  </div>
+  <div>{{ message }}</div>
+  <a href="/rides" class="btn btn-block">Track a new ride Ride</a>
 </div>
-<a href="/rides" class="btn btn-block">Track a new ride Ride</a>

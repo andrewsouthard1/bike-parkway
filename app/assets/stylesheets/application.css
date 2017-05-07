@@ -35,11 +35,6 @@ body {
   margin: 0 auto;
 }
 
-.login-form {
-  background-color: #282B2A;
-  color: white;
-}
-
 .street-line {
   border-bottom: 2px dashed white;
   width: 125px;

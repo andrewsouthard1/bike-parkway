@@ -175,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           user_id: parseInt(document.querySelector('#user-id').innerHTML),
           top_five: false
         };
+        console.log(parameters);
         $.post('api/v1/rides', parameters, function(response) {
           console.log(response);
           this.inProgressRides.push(response);
