@@ -1,16 +1,9 @@
 <div id="app">
-
-  <% if current_user %>
-    <p>User email: <%= current_user.email %> User id: <span id="user-id"><%= current_user.id %></p>
-  <% end %>
-
-  <div id="milesBox">
-    <p id="rideMiles"></p>
-    <p> Miles</p>
-  </div>
-  <div id="weather_box"></div>
+  <div id="weather-box"></div>
   <div>{{ inProgressRides }}<button class="btn" v-on:click="finishRide()"><i class="fa fa-flag-checkered" aria-hidden="true"></i></div>
-
+  <div id="milesBox">
+    <span id="rideMiles"></span>
+  </div>
   <input id="origin-input" v-model="newOrigin" class="controls" type="text"
       placeholder="Enter an origin location">
 
@@ -19,13 +12,8 @@
 
   <div id="map">
   </div>
-
-  <div id="weather_box"></div>
-
-
-    {{ message }}
-  <div id="saveRide">
-    <button class="btn" v-on:click="createRide()">Start My Ride</button>
+  <div id="save-ride">
+    <button class="btn btn-block" v-on:click="createRide()">Start My Ride</button>
   </div>
 
 </div>

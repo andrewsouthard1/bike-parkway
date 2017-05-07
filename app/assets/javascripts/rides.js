@@ -3,9 +3,51 @@
 /* global $ */
 
 function initMap() {
+  var styles = [
+    {
+      "elementType": "labels",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    },
+    {
+      "elementType": "geometry",
+      "stylers": [
+          {
+            "visibility": "off"
+          }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+          {
+              "visibility": "on"
+          },
+          {
+              "color": "#000000"
+          }
+      ]
+    },
+    {
+      "featureType": "landscape",
+      "stylers": [
+          {
+              "color": "#ffffff"
+          },
+          {
+              "visibility": "on"
+          }
+      ]
+    },
+    {}
+  ]
+
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
     center: {lat: 40.7829, lng: -73.9654},
+    styles: styles,
     zoom: 15
   });
 
@@ -63,8 +105,9 @@ AutocompleteDirectionsHandler.prototype.route = function() {
     travelMode: this.travelMode
   }, function(response, status) {
     if (status === 'OK') {
+      displayStartButton();
       displayMiles(response);
-      getWeather(getOriginLat(response), getOriginLng(response));
+      // getWeather(getOriginLat(response), getOriginLng(response));
       console.log(response);
       me.directionsDisplay.setDirections(response);
     } else {
@@ -76,7 +119,12 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 function displayMiles(response) {
   var meters = response.routes[0].legs[0].distance.value;
   var miles = getMiles(meters);
-  document.getElementById('rideMiles').innerHTML = miles;
+  document.getElementById('rideMiles').innerHTML = miles + " mi";
+  document.getElementById('milesBox').style.display = 'block';
+}
+
+function displayStartButton() {
+  document.getElementById('save-ride').style.display = 'block';
 }
 
 function getMiles(meters) {
@@ -101,7 +149,9 @@ function getOriginLng(response) {
 function getWeather(lat, lng) {
   $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response) {
     var forecast = response.query.results.channel.item.forecast[0];
-    document.getElementById('weather_box').innerHTML = '<p>' + forecast.date + '</p>' + '<p>' + "High: " + forecast.high + '</p>' + '<p>' + "Low: " + forecast.low + '</p>' + '<p>' + forecast.text + '</p>';
+    document.getElementById('weather-box').innerHTML = 
+    '<p>' + forecast.date + " High: " + forecast.high + " Low: " + forecast.low + " " + forecast.text + '</p>';
+    document.getElementById('weather-box').style.display = 'block';
     console.log(response);
   });
 }
@@ -111,7 +161,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     el: '#app',
     data: {
       message: 'Hello Vue!',
-      inProgressRides: []
+      inProgressRides: [],
+      startRideButton: ''
     },
     methods: {
       createRide: function() {
