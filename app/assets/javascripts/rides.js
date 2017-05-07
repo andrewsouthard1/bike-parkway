@@ -193,6 +193,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     },
 
+    mounted: function() {
+      this.inProgressRides.push("bananas");
+    }
+
   });
 });
 
