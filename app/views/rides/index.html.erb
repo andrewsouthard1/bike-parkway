@@ -9,7 +9,7 @@
     <p> Miles</p>
   </div>
   <div id="weather_box"></div>
-  <div>{{ inProgressRides }}<button v-on:click="finishRide()">Change Ride From In Progress To Completed</div>
+  <div>{{ inProgressRides }}<button class="btn" v-on:click="finishRide()"><i class="fa fa-flag-checkered" aria-hidden="true"></i></div>
 
   <input id="origin-input" v-model="newOrigin" class="controls" type="text"
       placeholder="Enter an origin location">
@@ -25,7 +25,7 @@
 
     {{ message }}
   <div id="saveRide">
-    <button v-on:click="createRide()">Start My Ride</button>
+    <button class="btn" v-on:click="createRide()">Start My Ride</button>
   </div>
 
 </div>

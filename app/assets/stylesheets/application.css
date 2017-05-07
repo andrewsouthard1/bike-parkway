@@ -19,6 +19,17 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+.btn {
+  background-color: #282B2A;
+  color: white;
+}
+
+.btn:hover {
+  background: #4ab678;
+  text-decoration: none;
+  color: white;
+}
+
 .login-form {
   background-color: #282B2A;
   color: white;
