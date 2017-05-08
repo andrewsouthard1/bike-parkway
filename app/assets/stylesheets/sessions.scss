@@ -1,11 +1,24 @@
 // Place all the styles related to the Sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -10;
+  border: 15px solid black;
+  zoom: 25%;
+}
+
 .login-form {
-  margin-top: 100px;
+  margin-top: 200px;
   margin-left: 20%;
   margin-right: 20%;
-  border: 2.5px solid black;
+  border: 15px solid #282B2A;
   border-radius: 1%;
   background-color: white;
   color: #282B2A;

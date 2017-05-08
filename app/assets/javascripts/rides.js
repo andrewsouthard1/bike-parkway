@@ -194,7 +194,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     },
 
     mounted: function() {
-      this.inProgressRides.push("bananas");
+      $.get("/api/v1/rides", function(response) {
+        console.log(response);
+        for (var i = 0; i < response.length; i++){
+          // if (response[i].)
+          this.inProgressRides.push(response[i]);
+        }
+      }.bind(this));
+      console.log("Running");
     }
 
   });
