@@ -18,10 +18,16 @@
   margin-top: 200px;
   margin-left: 20%;
   margin-right: 20%;
-  border: 15px solid #282B2A;
+  border: 15px solid white;
   border-radius: 1%;
-  background-color: white;
-  color: #282B2A;
+  background-color: #282B2A;
+  color: white;
   padding: 10px;
   font-family: 'Open Sans', sans-serif;
+}
+
+.login-button {
+  background-color: white;
+  color: #282B2A;
+  text-transform: uppercase;
 }

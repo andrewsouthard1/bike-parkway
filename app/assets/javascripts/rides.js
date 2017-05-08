@@ -13,36 +13,35 @@ function initMap() {
     {
       "elementType": "geometry",
       "stylers": [
-          {
-            "visibility": "off"
-          }
+        {
+          "visibility": "off"
+        }
       ]
     },
     {
       "featureType": "road",
       "elementType": "geometry",
       "stylers": [
-          {
-              "visibility": "on"
-          },
-          {
-              "color": "#000000"
-          }
+        {
+          "visibility": "on"
+        },
+        {
+          "color": "#000000"
+        }
       ]
     },
     {
       "featureType": "landscape",
       "stylers": [
-          {
-              "color": "#ffffff"
-          },
-          {
-              "visibility": "on"
-          }
+        {
+          "color": "#ffffff"
+        },
+        {
+          "visibility": "on"
+        }
       ]
     },
-    {}
-  ]
+    {}]
 
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
@@ -181,28 +180,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.inProgressRides.push(response);
         }.bind(this));
       },
-      finishRide: function() {
-        console.log("Change ride from in progress to completed");
+      finishRide: function(ride) {
+        console.log(ride.id);
         $.ajax({
-          url: 'api/v1/rides/' + this.inProgressRides[0].id, 
+          url: '/api/v1/rides/' + ride.id, 
           method: "PUT",
           success: function(data) {
             alert('Load was performed.');
           }
         });
+        var index = this.inProgressRides.indexOf(ride);
+        console.log(index);
+        this.inProgressRides.splice(index, 1);
+      },
+      showRide: function(ride) {
+        console.log(ride.in_progress);
+        return ride.in_progress === true;
       }
     },
 
     mounted: function() {
       $.get("/api/v1/rides", function(response) {
         console.log(response);
-        for (var i = 0; i < response.length; i++){
-          // if (response[i].)
-          this.inProgressRides.push(response[i]);
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].in_progress === true) {
+            this.inProgressRides.push(response[i]);
+          }
         }
       }.bind(this));
       console.log("Running");
-    }
+    },
 
   });
 });

@@ -1,8 +1,15 @@
 <div id="app">
   <%= @user.email %>
 
-  <div>{{ inProgressRides }}
-    <button class="btn" v-on:click="finishRide()"><i class="fa fa-flag-checkered" aria-hidden="true"></i>
+  <div v-for="ride in inProgressRides">
+    <div class="in-progress-bar">
+      <span>{{ ride.starting_location }}</span>
+      <span>{{ ride.ending_location }}</span>
+      <span>{{ ride.created_at }}</span>
+      <span>{{ ride.miles }} Miles</span>
+      <span>{{ ride.in_progress }}</span>
+      <button class="btn in-progress-button" v-on:click="finishRide(ride)"><i class="fa fa-flag-checkered" aria-hidden="true"></i>
+    </div>
   </div>
   <div id="userMilesBox">
     38.4 mi
