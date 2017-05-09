@@ -25,7 +25,7 @@
   color: #282B2A;
   width: 80%;
   margin: 0 auto;
-  text-align: center;
+  text-align: right;
   text-transform: uppercase;
   border: 2.5px solid black;
   border-radius: 1%;
@@ -33,6 +33,9 @@
 }
 
 .in-progress-button {
-  border-radius: 1%;
-  border: 
+  border: 5px solid white; 
+  border-radius: 50%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
 }

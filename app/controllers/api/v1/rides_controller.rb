@@ -29,6 +29,7 @@ class Api::V1::RidesController < ApplicationController
 
   def update
     ride = Ride.find_by(id: params[:id])
+    p params[:testData]
     @ride_updated = ride.update(
       in_progress: false,
       finished: true

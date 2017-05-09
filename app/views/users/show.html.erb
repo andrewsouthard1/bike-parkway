@@ -8,12 +8,15 @@
       <span>{{ ride.created_at }}</span>
       <span>{{ ride.miles }} Miles</span>
       <span>{{ ride.in_progress }}</span>
-      <button class="btn in-progress-button" v-on:click="finishRide(ride)"><i class="fa fa-flag-checkered" aria-hidden="true"></i>
+      <button class="btn in-progress-button" v-on:click="finishRide(ride)"><i class="fa fa-flag-checkered fa-fw" aria-hidden="true"></i>
     </div>
   </div>
   <div id="userMilesBox">
-    38.4 mi
+    <% if @user.miles %>
+      <%= @user.miles %>
+    <% else %>
+      0
+    <% end %>
   </div>
-  <div>{{ message }}</div>
   <a href="/rides" class="btn btn-block">Track a new ride Ride</a>
 </div>

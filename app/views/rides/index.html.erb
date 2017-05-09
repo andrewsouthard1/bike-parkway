@@ -1,6 +1,8 @@
 <div id="app">
   <div id="weather-box"></div>
+  <% if current_user %>
   <div id="user-id"><%= current_user.id %></div>
+  <% end %>
   <div id="milesBox">
     <span id="rideMiles"></span> mi
   </div>
@@ -12,9 +14,15 @@
 
   <div id="map">
   </div>
+  <% if current_user %>
   <div id="save-ride">
     <a class="btn btn-block" v-on:click="createRide()" href="/users/<%= current_user.id %>">Start My Ride</a>
   </div>
+  <% else %>
+  <a class="btn btn-block" href="/login">Log In To Track Miles</a>
+  </div>
+  <% end %>
+
 
 </div>
 

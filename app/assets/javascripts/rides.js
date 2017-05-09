@@ -182,9 +182,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
       finishRide: function(ride) {
         console.log(ride.id);
+        var testData = {'miles': ride.miles};
         $.ajax({
           url: '/api/v1/rides/' + ride.id, 
           method: "PUT",
+          data: testData,
           success: function(data) {
             alert('Load was performed.');
           }
