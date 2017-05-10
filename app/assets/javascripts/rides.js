@@ -161,7 +161,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       message: 'Hello Vue!',
       inProgressRides: [],
-      startRideButton: ''
+      startRideButton: '',
+      miles: 0
     },
     methods: {
       createRide: function() {
@@ -211,8 +212,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       }.bind(this));
       console.log("Running");
-    },
-
+    }
   });
 });
 

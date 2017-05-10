@@ -23,6 +23,13 @@ Rails.application.routes.draw do
   post '/users' => 'users#create'
   get '/users/:id' => 'users#show'
 
+  namespace :api do
+    namespace :v1 do
+      get '/users' => 'users#index'
+      get '/users/:id' => 'users#show'
+    end
+  end
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'

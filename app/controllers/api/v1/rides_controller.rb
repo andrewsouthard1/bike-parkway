@@ -29,12 +29,25 @@ class Api::V1::RidesController < ApplicationController
 
   def update
     ride = Ride.find_by(id: params[:id])
-    p params[:testData]
+    user = User.find_by(id: ride.user_id)
+
+    if user.miles == nil
+      new_miles = ride.miles
+    else
+      new_miles = ride.miles + user.miles
+    end
+    p "new_miles#{new_miles}"
+
     @ride_updated = ride.update(
       in_progress: false,
       finished: true
     )
-    if @ride_updated
+
+    @user_update = user.update(
+      miles: new_miles
+    )
+
+    if @ride_updated && @user_update
       render json: {ride: "completed"} 
     else
       render json: {error: "error"}, status: 422

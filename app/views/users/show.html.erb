@@ -1,5 +1,6 @@
 <div id="app">
   <%= @user.email %>
+  <div id="userId"><%= @user.id %></div>
 
   <div v-for="ride in inProgressRides">
     <div class="in-progress-bar">
@@ -13,7 +14,7 @@
   </div>
   <div id="userMilesBox">
     <% if @user.miles %>
-      <%= @user.miles %>
+      {{ miles }}
     <% else %>
       0
     <% end %>
