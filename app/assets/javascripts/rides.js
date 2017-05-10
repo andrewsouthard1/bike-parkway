@@ -187,17 +187,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $.ajax({
           url: '/api/v1/rides/' + ride.id, 
           method: "PUT",
-          data: testData,
-          success: function(data) {
-            alert('Load was performed.');
-          }
+          data: testData
         });
         var index = this.inProgressRides.indexOf(ride);
-        console.log(index);
         this.inProgressRides.splice(index, 1);
+        var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
+        console.log(displayMiles);
+        this.miles = displayMiles.toFixed(2);
       },
       showRide: function(ride) {
-        console.log(ride.in_progress);
         return ride.in_progress === true;
       }
     },
@@ -212,6 +210,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       }.bind(this));
       console.log("Running");
+      if (!document.getElementById("userId")) {
+        console.log("we're in the rides page");
+      } else {
+        var userId = document.getElementById("userId").innerHTML;
+        console.log(userId);
+        $.get("/api/v1/users/" + userId, function(response){
+          console.log("Miles:" + response['miles']);
+          this.miles += response.miles;
+        }.bind(this));
+      }
     }
   });
 });
