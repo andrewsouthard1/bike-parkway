@@ -60,8 +60,9 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
   font-family: 'Comfortaa', cursive;
-  opacity: 0.95;
-  text-align: center;
+  opacity: 0.5;
+  text-align: right;
+  padding-right: 20px;
   text-transform: uppercase;
 }
 

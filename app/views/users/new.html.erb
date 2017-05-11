@@ -1,20 +1,22 @@
-<h1>Signup for Bike Parkway</h1>
 
-<%= form_tag '/users', method: :post do %>
-  <div>
-    First Name: <input type="text" name="first_name">
-  </div>
-  <div>
-    Last Name: <input type="text" name="last_name">
-  </div>
-  <div>
-    Email: <input type="email" name="email">
-  </div>
-  <div>
-    Password: <input type="password" name="password">
-  </div>
-  <div>
-    Confirm Password: <input type="password" name="password_confirmation">
-  </div>
-  <input type="submit" value="Submit">
-<% end %>
+
+<div class="login-form">
+  <%= form_tag '/users', method: :post do %>
+      <div class="form-group">
+        <label for="firstName">First Name: </label><input type="text" name="first_name" class="form-control">    
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name: </label><input type="text" name="last_name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label><input type="email" name="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password">Password: </label><input type="password" name="password" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password: </label><input type="password" name="password_confirmation" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-block" name="submit">Submit</button>
+  <% end %>
+</div>
