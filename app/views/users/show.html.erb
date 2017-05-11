@@ -13,11 +13,15 @@
     </div>
   </div>
   <div id="userMilesBox">
-    <% if @user.miles %>
-      {{ miles }}
-    <% else %>
-      0
-    <% end %>
+    {{ miles }} MI
   </div>
-  <a href="/rides" class="btn btn-block">Track a new ride Ride</a>
+  <a href="/rides" class="btn btn-block">Track a New Ride</a>
+  <div></div>
 </div>
+ <footer class="footer">
+    <% if current_user %>
+      <a href="/logout">Log Out</a>
+    <% else %>
+      <a href="/signup">Sign Up</a>
+    <% end %>
+  </footer>

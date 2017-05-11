@@ -26,7 +26,17 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+.button-group {
+  text-align: center;
+}
+
 .login-button {
+  background-color: white;
+  color: #282B2A;
+  text-transform: uppercase;
+}
+
+.submit-button {
   background-color: white;
   color: #282B2A;
   text-transform: uppercase;
