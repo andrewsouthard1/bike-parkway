@@ -29,7 +29,11 @@
         </p>
     <% end %>
   </div>
-  <p>{{ friendMiles }}</p>
+  <div v-for="friend in sortedFriends">
+    <p>
+      {{ friend.firstName }} {{ friend.miles }}
+    </p>
+  </div>
 </div>
 <footer class="footer">
   <% if current_user %>

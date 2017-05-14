@@ -161,8 +161,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       message: 'Hello Vue!',
       inProgressRides: [],
-      friendMiles: [],
-      friendIds: [],
+      rankings: [],
       startRideButton: '',
       miles: 0
     },
@@ -196,6 +195,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
         console.log(displayMiles);
         this.miles = displayMiles.toFixed(2);
+        for (var i = 0; i < this.rankings.length; i++) {
+          if (this.rankings[i].userId !== undefined){
+            this.rankings[i].miles = displayMiles;
+          }
+        }
+        // this.rankings
       },
       showRide: function(ride) {
         return ride.in_progress === true;
@@ -223,15 +228,37 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }.bind(this));
       }
 
+      // Add user's own info to Rankings
+      $.get("/api/v1/users/" + userId, function(response){
+        this.rankings.push({
+          userId: response.id,
+          firstName: response.firstName,
+          miles: response.miles,
+        });
+      }.bind(this));
+
       $.get("/api/v1/friendships", function(response) {
         for (var i = 0; i < response.length; i++) {
           if (response[i].user_id.toString() === userId) {
             var friendId = response[i].friend_id;
-            this.friendMiles += friendId + "----";
-
+            $.get("/api/v1/users/" + friendId, function(response) {
+              this.rankings.push({
+                firstName: response.firstName,
+                miles: response.miles
+              });   
+            }.bind(this));
+            
           }
         }
       }.bind(this));
+    },
+
+    computed: {
+      sortedFriends: function() {
+        return this.rankings.sort(function(friend1, friend2) {
+          return friend1.miles < friend2.miles;
+        }.bind(this));
+      }
     }
   });
 });
