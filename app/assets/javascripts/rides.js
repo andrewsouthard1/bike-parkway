@@ -161,6 +161,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       message: 'Hello Vue!',
       inProgressRides: [],
+      friendMiles: [],
+      friendIds: [],
       startRideButton: '',
       miles: 0
     },
@@ -201,25 +203,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
     },
 
     mounted: function() {
+      var userId = document.getElementById("userId").innerHTML;
       $.get("/api/v1/rides", function(response) {
-        console.log(response);
         for (var i = 0; i < response.length; i++) {
-          if (response[i].in_progress === true) {
+          if (response[i].in_progress === true && response[i].user_id.toString() === userId) {
             this.inProgressRides.push(response[i]);
           }
         }
       }.bind(this));
+
       console.log("Running");
       if (!document.getElementById("userId")) {
         console.log("we're in the rides page");
       } else {
-        var userId = document.getElementById("userId").innerHTML;
         console.log(userId);
         $.get("/api/v1/users/" + userId, function(response){
           console.log("Miles:" + response['miles']);
           this.miles += response.miles;
         }.bind(this));
       }
+
+      $.get("/api/v1/friendships", function(response) {
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].user_id.toString() === userId) {
+            var friendId = response[i].friend_id;
+            this.friendMiles += friendId + "----";
+
+          }
+        }
+      }.bind(this));
     }
   });
 });

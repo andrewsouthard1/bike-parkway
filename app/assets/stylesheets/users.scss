@@ -1,6 +1,12 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+hr {
+  border-top: 5px solid white;
+  width: 100px;
+  margin-right: 90%;
+}
+
 .friend-box-header {
   background: #282B2A;
   color: white;
@@ -22,7 +28,7 @@
 }
 
 #users {
-  color: #282B2A;
+  color: white;
   text-align: left;
   text-transform: uppercase;
   font-family: 'Comfortaa', cursive;
@@ -33,11 +39,11 @@
 }
 
 #users a {
-  color: #282B2A;
+  color: white;
 }
 
 #users a:visited {
-  color: #282B2A;
+  color: white;
 }
 
 

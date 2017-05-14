@@ -35,6 +35,12 @@ Rails.application.routes.draw do
   post '/friendships' => 'friendships#create'
   delete 'friendships/:id' => 'friendships#destroy'
 
+  namespace :api do
+    namespace :v1 do
+      get '/friendships' => 'friendships#index'
+    end
+  end
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'

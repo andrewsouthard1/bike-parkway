@@ -16,19 +16,20 @@
     {{ miles }} MI
   </div>
   <a href="/rides" class="btn btn-block">Track a New Ride</a>
-    <div id="friend-box">
-      <p class="friend-box-header">Rankings</p>
-      <% @user.friendships.each do |friendship| %>
-          <p>
-            <%= friendship.friend.first_name %>
-            <% if friendship.friend.miles %>
-              <%= friendship.friend.miles %>
-            <% else %>
-              0
-            <% end %>
-          </p>
-      <% end %>
-    </div> 
+  <div id="friend-box">
+    <p class="friend-box-header">Rankings</p>
+    <% @user.friendships.each do |friendship| %>
+        <p>
+          <%= friendship.friend.first_name %>
+          <% if friendship.friend.miles %>
+            <%= friendship.friend.miles %>
+          <% else %>
+            0
+          <% end %>
+        </p>
+    <% end %>
+  </div>
+  <p>{{ friendMiles }}</p>
 </div>
 <footer class="footer">
   <% if current_user %>
