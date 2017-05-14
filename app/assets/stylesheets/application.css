@@ -41,15 +41,17 @@ body {
   margin: 0 auto;
 }
 
-.street-line {
-  border-bottom: 2px dashed white;
-  width: 125px;
-}
 
 .bike-icon {
   float: right;
   margin-right: 20px;
   margin-top: 5px;
+}
+
+.chain-link {
+  font-family: 'Comfortaa', cursive;
+  opacity: 0.5;
+  color: white;
 }
 
 .footer {
@@ -83,13 +85,14 @@ body {
   opacity: .95;
 }
 
-.color_test {
-  color: white;
-}
-
 .navbar a:link {
     text-decoration: none;
     color: white;
+}
+
+.street-line {
+  border-bottom: 2px dashed white;
+  width: 125px;
 }
 
 a:visited {

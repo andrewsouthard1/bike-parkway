@@ -21,6 +21,26 @@
   margin: 20px auto;
 }
 
+#users {
+  color: #282B2A;
+  text-align: left;
+  text-transform: uppercase;
+  font-family: 'Comfortaa', cursive;
+  font-size: 30px;
+  overflow: hidden;
+  width: 80%;
+  margin: 40px auto;
+}
+
+#users a {
+  color: #282B2A;
+}
+
+#users a:visited {
+  color: #282B2A;
+}
+
+
 #userId {
   display: none;
 }

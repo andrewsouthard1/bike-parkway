@@ -26,6 +26,18 @@
 
 </div>
 
+<footer class="footer">
+  <% if current_user %>
+    <a href="/users/<%= current_user.id %>">Home</a>
+    <span class="chain-link">-</span>
+    <a href="/logout">Log Out</a>
+  <% else %>
+    <a href="/login">Log In</a>
+    <span class="chain-link">-</span>
+    <a href="/signup">Sign Up</a>
+  <% end %>
+</footer>
+
 <script src="rides.js">
 </script>
 

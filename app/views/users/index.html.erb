@@ -3,11 +3,12 @@
 <div id="users">
   <% @users.each do |user| %>
     <div class="user">
-      <% if user.id != current_user.id %>
+      <% if user.id != current_user.id  && !current_user.friend?(user.id) %>
         <p> <%= user.first_name %> <%= user.last_name %></p>
         <% if current_user %>
           <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
         <% end %>
+        <hr>
       <% end %>
     </div>
   <% end %>
