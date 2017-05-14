@@ -16,18 +16,28 @@
     {{ miles }} MI
   </div>
   <a href="/rides" class="btn btn-block">Track a New Ride</a>
-  <div class="friend-box">
-    <% @user.friendships.each do |friendship| %>
-      <p><%= friendship.friend.first_name %> <%= friendship.friend.last_name %> <%= friendship.friend.miles %>
-        (<%= link_to "remove", friendship, :method => :delete %>)
-      </p>
-    <% end %>
-  </div>
+    <div id="friend-box">
+      <p class="friend-box-header">Rankings</p>
+      <% @user.friendships.each do |friendship| %>
+          <p>
+            <%= friendship.friend.first_name %>
+            <% if friendship.friend.miles %>
+              <%= friendship.friend.miles %>
+            <% else %>
+              0
+            <% end %>
+          </p>
+      <% end %>
+    </div> 
 </div>
- <footer class="footer">
-    <% if current_user %>
-      <a href="/logout">Log Out</a>
-    <% else %>
-      <a href="/signup">Sign Up</a>
-    <% end %>
-  </footer>
+<footer class="footer">
+  <% if current_user %>
+    <a href="/users">Make Friends</a>
+    -
+    <a href="/rides">New Ride</a>
+    -
+    <a href="/logout">Log Out</a>
+  <% else %>
+    <a href="/signup">Sign Up</a>
+  <% end %>
+</footer>

@@ -1,6 +1,26 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.friend-box-header {
+  background: #282B2A;
+  color: white;
+
+}
+
+#friend-box {
+  background: white;
+  color: #282B2A;
+  text-align: center;
+  text-transform: uppercase;
+  border: 2.5px solid black;
+  border-radius: 1%;
+  font-family: 'Comfortaa', cursive;
+  font-size: 30px;
+  overflow: hidden;
+  width: 40%;
+  margin: 20px auto;
+}
+
 #userId {
   display: none;
 }

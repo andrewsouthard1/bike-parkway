@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   end
 
   post '/friendships' => 'friendships#create'
-  delete 'friendships' => 'friendships#destroy'
+  delete 'friendships/:id' => 'friendships#destroy'
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
