@@ -107,7 +107,6 @@ AutocompleteDirectionsHandler.prototype.route = function() {
       displayStartButton();
       displayMiles(response);
       // getWeather(getOriginLat(response), getOriginLng(response));
-      console.log(response);
       me.directionsDisplay.setDirections(response);
     } else {
       window.alert('Directions request failed due to ' + status);
@@ -196,14 +195,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log(displayMiles);
         this.miles = displayMiles.toFixed(2);
         for (var i = 0; i < this.rankings.length; i++) {
-          if (this.rankings[i].userId !== undefined){
-            this.rankings[i].miles = displayMiles;
+          if (this.rankings[i].userId !== undefined) {
+            this.rankings[i].miles = displayMiles.toFixed(2);
           }
         }
-        // this.rankings
       },
       showRide: function(ride) {
         return ride.in_progress === true;
+      },
+      firstPlace: function(index) {
+        return index === 0;
       }
     },
 

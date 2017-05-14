@@ -18,21 +18,15 @@
   <a href="/rides" class="btn btn-block">Track a New Ride</a>
   <div id="friend-box">
     <p class="friend-box-header">Rankings</p>
-    <% @user.friendships.each do |friendship| %>
-        <p>
-          <%= friendship.friend.first_name %>
-          <% if friendship.friend.miles %>
-            <%= friendship.friend.miles %>
-          <% else %>
-            0
-          <% end %>
+      <div v-for="(friend, index) in sortedFriends">
+        <p v-if="firstPlace(index)">
+          <i class="fa fa-trophy" aria-hidden="true"></i>
+          {{ friend.firstName }} {{ friend.miles }}
         </p>
-    <% end %>
-  </div>
-  <div v-for="friend in sortedFriends">
-    <p>
-      {{ friend.firstName }} {{ friend.miles }}
-    </p>
+        <p v-else>
+          {{ friend.firstName }} {{ friend.miles }}
+        </p>
+      </div>
   </div>
 </div>
 <footer class="footer">
