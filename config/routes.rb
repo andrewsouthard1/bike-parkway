@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'sessions/new'
 
   get 'sessions/create'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   get '/signup' => 'users#new'
+  get '/users' => 'users#index'
   post '/users' => 'users#create'
   get '/users/:id' => 'users#show'
 
@@ -29,6 +31,9 @@ Rails.application.routes.draw do
       get '/users/:id' => 'users#show'
     end
   end
+
+  post '/friendships' => 'friendships#create'
+  delete 'friendships' => 'friendships#destroy'
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'

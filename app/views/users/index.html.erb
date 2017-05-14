@@ -1,0 +1,10 @@
+<h1>User List</h1>
+
+<div id="users">
+  <% @users.each do |user| %>
+    <div class="user">
+      <p> <%= user.first_name %> <%= user.last_name %></p>
+      <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+    </div>
+  <% end %>
+</div>
