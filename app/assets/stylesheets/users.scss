@@ -7,6 +7,9 @@ hr {
   margin-right: 90%;
 }
 
+.bike-button {
+  border-radius: 0;
+}
 .fa-trophy {
   color: #D4AF37;
 }
@@ -17,12 +20,31 @@ hr {
 
 }
 
+.sort-button-row {
+  background: white;
+  color: #282B2A;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: 2.5px solid #282B2A;
+  font-family: 'Comfortaa', cursive;
+}
+
+#selected-miles {
+  background: #282B2A;
+  color: white;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+}
+
 #friend-box {
   background: white;
   color: #282B2A;
   text-align: center;
   text-transform: uppercase;
-  border: 2.5px solid black;
+  border: 2.5px solid #282B2A;
   border-radius: 1%;
   font-family: 'Comfortaa', cursive;
   font-size: 30px;
@@ -63,8 +85,7 @@ hr {
   text-align: center;
   text-transform: uppercase;
   height: 100px;
-  border: 2.5px solid black;
-  border-radius: 1%;
+  border: 2.5px solid #282B2A;
   font-family: 'Comfortaa', cursive;
   font-size: 80px;
   overflow: hidden;
@@ -79,15 +100,15 @@ hr {
   color: #282B2A;
   width: 80%;
   margin: 0 auto;
+  font-size: 15px;
   text-align: right;
   text-transform: uppercase;
-  border: 2.5px solid black;
-  border-radius: 1%;
+  border: 2.5px solid #282B2A;
   font-family: 'Comfortaa', cursive;
 }
 
 .in-progress-button {
-  border: 5px solid white; 
+  // border: 5px solid white; 
   border-radius: 50%;
   margin-bottom: 5px;
   margin-top: 5px;

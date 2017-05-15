@@ -205,6 +205,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
       firstPlace: function(index) {
         return index === 0;
+      },
+      sortByLifetime: function() {
+        console.log("sortByLifetime connected");
       }
     },
 
