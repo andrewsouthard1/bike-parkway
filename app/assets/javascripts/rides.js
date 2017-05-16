@@ -243,24 +243,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
               $.get("/api/v1/rides", function(response) {
 
                 var todayMS = Date.now();
+                var nameTracker = new Object();
                 for (var i = 0; i < response.length; i++) {
                   if (response[i].user_id === parseInt(friendId) && response[i]) {
                     var rideMS = Date.parse(response[i].updated_at);
                     if ((todayMS - rideMS) <= 604800000) {
                       weeklyMiles += response[i].miles;
-                      var userId = response[i].user_id;
-                      var firstName = response[i].first_name;
+                      nameTracker[response[i].user_id] = response[i].first_name;
                     }
                   }
 
 
                 }
-                  this.rankings.push({
-                    userId: userId,
-                    firstName: firstName,
-                    miles: weeklyMiles.toFixed(2),
-                  });
+                console.log(nameTracker);
+                  // this.rankings.push({
+                  //   userId: userId,
+                  //   firstName: firstName,
+                  //   miles: weeklyMiles.toFixed(2),
+                  // });
               }.bind(this));
+              
             }
           }
         }.bind(this));        
