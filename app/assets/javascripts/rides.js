@@ -221,13 +221,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
           }
           this.miles = weekMiles;
-          this.rankings = [];
           $.get('/api/v1/users/' + userId, function(response){
-              this.rankings.push({
-                userId: response.id,
-                firstName: response.firstName,
-                miles: weekMiles,
-              });
           }.bind(this));
         }.bind(this));
       },
@@ -235,6 +229,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
       makeRankingsWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
         $.get("/api/v1/friendships/" + userId, function(response) {
+          // this.rankings = [];
+          for (var x = 0; x < this.rankings.length; x++) {
+            console.log(this.rankings[x].userId);
+            // if (this.rankings[x].userId === userId) {
+            //   console.log(this.rankings[x]);
+            // }
+          }
+
+
+          // this.rankings.push({
+          //   userId: userId,
+
+          // })
           for (var i = 0; i < response.length; i++) {
             var friendId = response[i].friend_id;
             var weeklyMiles = 0;
@@ -250,9 +257,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
               }
             }
-            // }
-            console.log(friendFirstName);
-            console.log(weeklyMiles);
+            this.rankings.push({
+              userId: friendId,
+              firstName: friendFirstName,
+              miles: weeklyMiles,
+            });
           }
         }.bind(this));        
 
@@ -295,6 +304,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var friendId = response[i].friend_id;
             $.get("/api/v1/users/" + friendId, function(response) {
               this.rankings.push({
+                // userId: response.user
                 firstName: response.firstName,
                 miles: response.miles
               });   
