@@ -206,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       firstPlace: function(index) {
         return index === 0;
       },
+      
       sortByWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
         var weekMiles = 0;
@@ -220,8 +221,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
               }
             }
           }
-          console.log(weekMiles);
-        });
+          this.miles = weekMiles;
+        }.bind(this));
       }
     },
 
