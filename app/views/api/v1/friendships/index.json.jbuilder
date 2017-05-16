@@ -4,5 +4,6 @@ json.array! @friendships.each do |friendship|
   json.friend_id friendship.friend_id
   if User.all.find_by(id: friendship.friend_id)
     json.friend_miles User.all.find_by(id: friendship.friend_id).miles
+    json.friend_first_name User.all.find_by(id: friendship.friend_id).first_name
   end
 end

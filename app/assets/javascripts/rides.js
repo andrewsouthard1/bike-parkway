@@ -234,36 +234,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       makeRankingsWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
-        $.get("/api/v1/friendships", function(response) {
+        $.get("/api/v1/friendships/" + userId, function(response) {
           for (var i = 0; i < response.length; i++) {
-            if (response[i].user_id.toString() === userId) {
-              var friendId = response[i].friend_id;
-              var weeklyMiles = 0;
-              // convert lifetimeMiles to weeklyMiles
-              $.get("/api/v1/rides", function(response) {
-
-                var todayMS = Date.now();
-                var nameTracker = new Object();
-                for (var i = 0; i < response.length; i++) {
-                  if (response[i].user_id === parseInt(friendId) && response[i]) {
-                    var rideMS = Date.parse(response[i].updated_at);
-                    if ((todayMS - rideMS) <= 604800000) {
-                      weeklyMiles += response[i].miles;
-                      nameTracker[response[i].user_id] = response[i].first_name;
-                    }
-                  }
-
-
+            var friendId = response[i].friend_id;
+            var weeklyMiles = 0;
+            var friendFirstName = response[i].friend_first_name;
+            // convert lifetimeMiles to weeklyMiles
+            var todayMS = Date.now();
+            for (var j = 0; j < response[i].friend_rides.length; j++) {
+              // console.log(response[i].friend_rides[j]);
+              if (response[i].friend_rides[j].finished) {
+                var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
+                if ((todayMS - rideMS) <= 604800000) {
+                  weeklyMiles += response[i].friend_rides[j].miles;
                 }
-                console.log(nameTracker);
-                  // this.rankings.push({
-                  //   userId: userId,
-                  //   firstName: firstName,
-                  //   miles: weeklyMiles.toFixed(2),
-                  // });
-              }.bind(this));
-              
+              }
             }
+            // }
+            console.log(friendFirstName);
+            console.log(weeklyMiles);
           }
         }.bind(this));        
 
