@@ -206,8 +206,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       firstPlace: function(index) {
         return index === 0;
       },
-      
-      sortByWeekly: function() {
+
+      makeMilesBoxWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
         var weekMiles = 0;
         $.get('/api/v1/rides/', function(response) {
@@ -215,14 +215,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
           for (var i = 0; i < response.length; i++) {
             if (response[i].user_id === parseInt(userId) && response[i]) {
               var rideMS = Date.parse(response[i].updated_at);
-              console.log("rideMS " + rideMS);
               if ((todayMS - rideMS) <= 604800000) {
                 weekMiles += response[i].miles;
               }
             }
           }
           this.miles = weekMiles;
+          this.rankings = [];
+          $.get('/api/v1/users/' + userId, function(response){
+              this.rankings.push({
+                userId: response.id,
+                firstName: response.firstName,
+                miles: weekMiles,
+              });
+          }.bind(this));
         }.bind(this));
+      },
+
+      makeRankingsWeekly: function() {
+        var userId = document.getElementById("userId").innerHTML;
+        console.log("clean up your api!")
       }
     },
 

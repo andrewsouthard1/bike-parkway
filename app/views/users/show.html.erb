@@ -16,9 +16,9 @@
     {{ miles }} MI
   </div>
   <div class="sort-button-row">
-    <span v-on:click="sortByWeekly" id="selected-miles" class="sort-button-left">Lifetime</span>
-    <span v-on:click="sortByWeekly" class="sort-button-center">Weekly</span>
-    <span v-on:click="sortByWeekly" class="sort-button-right">Today</span>
+    <span v-on:click="" id="selected-miles" class="sort-button-left">Lifetime</span>
+    <span v-on:click="makeMilesBoxWeekly() + makeRankingsWeekly()" class="sort-button-center">Weekly</span>
+    <span v-on:click="" class="sort-button-right">Today</span>
   </div>
   <a href="/rides" class="btn btn-block bike-button"><i class="fa fa-bicycle fa-2x"></i></a>
   <div id="friend-box">
