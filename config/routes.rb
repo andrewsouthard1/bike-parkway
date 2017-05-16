@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/friendships' => 'friendships#index'
+      get '/friendships/:id' => 'friendships#show'
     end
   end
 
