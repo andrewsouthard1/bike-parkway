@@ -7,4 +7,5 @@ json.array! @rides.each do |ride|
   json.finished ride.finished
   json.user_id ride.user_id
   json.top_five ride.top_five
+  json.updated_at ride.updated_at
 end
