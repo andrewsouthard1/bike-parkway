@@ -234,7 +234,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       makeRankingsWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
-        console.log("clean up your api!")
+        $.get("/api/v1/friendships", function(response) {
+          for (var i = 0; i < response.length; i++) {
+            if (response[i].user_id.toString() === userId) {
+              var friendId = response[i].friend_id;
+              var weeklyMiles = 0;
+
+              $.get("/api/v1/users/" + friendId, function(response) {
+                this.rankings.push({
+                  firstName: response.firstName,
+                  miles: weeklyMiles
+                });   
+              }.bind(this));
+              
+            }
+          }
+        }.bind(this));        
+
       }
     },
 
