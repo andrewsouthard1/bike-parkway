@@ -239,14 +239,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
             if (response[i].user_id.toString() === userId) {
               var friendId = response[i].friend_id;
               var weeklyMiles = 0;
+              // convert lifetimeMiles to weeklyMiles
+              $.get("/api/v1/rides", function(response) {
 
-              $.get("/api/v1/users/" + friendId, function(response) {
-                this.rankings.push({
-                  firstName: response.firstName,
-                  miles: weeklyMiles
-                });   
+                var todayMS = Date.now();
+                for (var i = 0; i < response.length; i++) {
+                  if (response[i].user_id === parseInt(friendId) && response[i]) {
+                    var rideMS = Date.parse(response[i].updated_at);
+                    if ((todayMS - rideMS) <= 604800000) {
+                      weeklyMiles += response[i].miles;
+                      var userId = response[i].user_id;
+                      var firstName = response[i].first_name;
+                    }
+                  }
+
+
+                }
+                  this.rankings.push({
+                    userId: userId,
+                    firstName: firstName,
+                    miles: weeklyMiles.toFixed(2),
+                  });
               }.bind(this));
-              
             }
           }
         }.bind(this));        
@@ -269,14 +283,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log("we're in the rides page");
       } else {
         console.log(userId);
-        $.get("/api/v1/users/" + userId, function(response){
+        $.get("/api/v1/users/" + userId, function(response) {
           console.log("Miles:" + response['miles']);
           this.miles += response.miles;
         }.bind(this));
       }
 
       // Add user's own info to Rankings
-      $.get("/api/v1/users/" + userId, function(response){
+      $.get("/api/v1/users/" + userId, function(response) {
         this.rankings.push({
           userId: response.id,
           firstName: response.firstName,

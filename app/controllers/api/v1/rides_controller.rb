@@ -1,5 +1,6 @@
 class Api::V1::RidesController < ApplicationController
   def index
+    @user = User.all
     @rides = Ride.all
     render 'index.json.jbuilder'
   end
