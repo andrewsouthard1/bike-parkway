@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               this.rankings.push({
                 userId: userId,
                 firstName: userFirstName,
-                miles: userWeeklyMiles.toFixed(2)
+                miles: parseFloat(userWeeklyMiles.toFixed(2))
               });
               goneThroughUserInfo = false;
             }
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             this.rankings.push({
               userId: friendId,
               firstName: friendFirstName,
-              miles: friendWeeklyMiles.toFixed(2),
+              miles: parseFloat(friendWeeklyMiles.toFixed(2))
             });
           }
         }.bind(this));        
@@ -291,42 +291,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
           var goneThroughUserInfo = true;
           for (var i = 0; i < response.length; i++) {
-            var friendId = response[i].friend_id;
-            var userWeeklyMiles = 0;
-            var friendWeeklyMiles = 0;
-            var userFirstName = response[i].user_first_name;
-            var friendFirstName = response[i].friend_first_name;
-            console.log(userFirstName);
-            var todayMS = Date.now();
-            for (var j = 0; j < response[i].friend_rides.length; j++) {
-              if (response[i].friend_rides[j].finished) {
-                var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
-                if ((todayMS - rideMS) <= 604800000) {
-                  friendWeeklyMiles += response[i].friend_rides[j].miles;
-                }
-              }
-            }
             if (goneThroughUserInfo) {
-              for (j = 0; j < response[i].user_rides.length; j++) {
-                if (response[i].user_rides[j].finished) {
-                  rideMS = Date.parse(response[i].user_rides[j].updated_at);
-                  if ((todayMS - rideMS) <= 604800000) {
-                    userWeeklyMiles += response[i].user_rides[j].miles;
-                  }
-                }
-              }
               this.rankings.push({
                 userId: userId,
-                firstName: userFirstName,
-                miles: userWeeklyMiles
+                firstName: response[i].user_first_name,
+                miles: parseFloat(response[i].user_miles.toFixed(2))
               });
               goneThroughUserInfo = false;
-            }
+            }            
             
             this.rankings.push({
-              userId: friendId,
-              firstName: friendFirstName,
-              miles: friendWeeklyMiles,
+              userId: response[i].friend_id,
+              firstName: response[i].friend_first_name,
+              miles: parseFloat(response[i].friend_miles.toFixed(2))
             });
           }
         }.bind(this));        

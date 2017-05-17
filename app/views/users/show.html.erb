@@ -24,13 +24,15 @@
   <div id="friend-box">
     <p class="friend-box-header">Rankings</p>
       <div v-for="(friend, index) in sortedFriends">
-        <p v-if="firstPlace(index)">
-          <i class="fa fa-trophy" aria-hidden="true"></i>
-          {{ friend.firstName }} {{ friend.miles }}
-        </p>
-        <p v-else>
-          {{ friend.firstName }} {{ friend.miles }}
-        </p>
+        <div id="rankings">
+          <p v-if="firstPlace(index)">
+            {{ friend.firstName }} {{ friend.miles }}
+            <i class="fa fa-trophy" aria-hidden="true"></i>
+          </p>
+          <p v-else>
+            {{ friend.firstName }} {{ friend.miles }}
+          </p>
+        </div>
       </div>
   </div>
 </div>
