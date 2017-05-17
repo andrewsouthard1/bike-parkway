@@ -194,8 +194,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
         console.log(displayMiles);
         this.miles = displayMiles.toFixed(2);
+        var userId = document.getElementById("userId").innerHTML;
         for (var i = 0; i < this.rankings.length; i++) {
-          if (this.rankings[i].userId !== undefined) {
+          if (this.rankings[i].userId === userId) {
             this.rankings[i].miles = displayMiles.toFixed(2);
           }
         }
@@ -208,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeMilesBoxWeekly: function() {
-        var userId = document.getElementById("userId").innerHTML;
         var weekMiles = 0;
         $.get('/api/v1/rides/', function(response) {
           var todayMS = Date.now();
