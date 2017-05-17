@@ -16,7 +16,7 @@
     {{ miles }} MI
   </div>
   <div class="sort-button-row">
-    <span v-on:click="" id="selected-miles" class="sort-button-left">Lifetime</span>
+    <span v-on:click="makeMilesBoxLifetime() + makeRankingsLifetime()" id="selected-miles" class="sort-button-left">Lifetime</span>
     <span v-on:click="makeMilesBoxWeekly() + makeRankingsWeekly()" class="sort-button-center">Weekly</span>
     <span v-on:click="" class="sort-button-right">Today</span>
   </div>

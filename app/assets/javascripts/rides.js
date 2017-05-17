@@ -209,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeMilesBoxWeekly: function() {
+        var userId = document.getElementById("userId").innerHTML;
         var weekMiles = 0;
         $.get('/api/v1/rides/', function(response) {
           var todayMS = Date.now();
@@ -220,13 +221,70 @@ document.addEventListener("DOMContentLoaded", function(event) {
               }
             }
           }
-          this.miles = weekMiles;
+          this.miles = weekMiles.toFixed(2);
         }.bind(this));
       },
 
       makeRankingsWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
         // this.rankings = [];
+        $.get("/api/v1/friendships/" + userId, function(response) {
+          
+          this.rankings = [];
+
+          var goneThroughUserInfo = true;
+          for (var i = 0; i < response.length; i++) {
+            var friendId = response[i].friend_id;
+            var userWeeklyMiles = 0;
+            var friendWeeklyMiles = 0;
+            var userFirstName = response[i].user_first_name;
+            var friendFirstName = response[i].friend_first_name;
+            console.log(userFirstName);
+            var todayMS = Date.now();
+            for (var j = 0; j < response[i].friend_rides.length; j++) {
+              if (response[i].friend_rides[j].finished) {
+                var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
+                if ((todayMS - rideMS) <= 604800000) {
+                  friendWeeklyMiles += response[i].friend_rides[j].miles;
+                }
+              }
+            }
+            if (goneThroughUserInfo) {
+              for (j = 0; j < response[i].user_rides.length; j++) {
+                if (response[i].user_rides[j].finished) {
+                  rideMS = Date.parse(response[i].user_rides[j].updated_at);
+                  if ((todayMS - rideMS) <= 604800000) {
+                    userWeeklyMiles += response[i].user_rides[j].miles;
+                  }
+                }
+              }
+              this.rankings.push({
+                userId: userId,
+                firstName: userFirstName,
+                miles: userWeeklyMiles.toFixed(2)
+              });
+              goneThroughUserInfo = false;
+            }
+            
+            this.rankings.push({
+              userId: friendId,
+              firstName: friendFirstName,
+              miles: friendWeeklyMiles.toFixed(2),
+            });
+          }
+        }.bind(this));        
+
+      },
+
+      makeMilesBoxLifetime: function() {
+        var userId = document.getElementById("userId").innerHTML;
+        $.get('/api/v1/users/' + userId, function(response) {
+          this.miles = response.miles.toFixed(2);
+        }.bind(this));
+      },
+
+      makeRankingsLifetime: function() {
+        var userId = document.getElementById("userId").innerHTML;
         $.get("/api/v1/friendships/" + userId, function(response) {
           
           this.rankings = [];
