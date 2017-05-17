@@ -1,18 +1,26 @@
 json.array! @friendships.each do |friendship|
   json.id friendship.id
   json.user_id friendship.user_id
+
+  # get user data
+  if User.all.find_by(id: friendship.user_id)
+    #user lifetime miles
+    json.user_miles User.all.find_by(id: friendship.user_id).miles
+    #user first name
+    json.user_first_name User.all.find_by(id: friendship.user_id).first_name
+    # Get all rides from user
+    json.user_rides Ride.all.where(user_id: friendship.user_id)
+  end
+
   json.friend_id friendship.friend_id
   
-  # get user data from friend_id
+  # get friend user data
   if User.all.find_by(id: friendship.friend_id)
-    
-    #lifetime miles
+    #friend lifetime miles
     json.friend_miles User.all.find_by(id: friendship.friend_id).miles
-
     #friend first name
     json.friend_first_name User.all.find_by(id: friendship.friend_id).first_name
-    
-    # Get all rides where user is friend
+    # Get all rides from friend
     json.friend_rides Ride.all.where(user_id: friendship.friend_id)
   end
 end
