@@ -8,7 +8,7 @@ hr {
 }
 
 .bike-button {
-  border-radius: 0;
+  border-radius: 1%;
 }
 .fa-trophy {
   color: #D4AF37;
@@ -33,11 +33,12 @@ hr {
   font-family: 'Comfortaa', cursive;
 }
 
-#selected-miles {
+.selected-miles {
   background: #282B2A;
   color: white;
   padding-top: 2.5px;
   padding-bottom: 2.5px;
+  border-radius: 10%;
 }
 
 #friend-box {

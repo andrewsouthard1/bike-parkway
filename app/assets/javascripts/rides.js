@@ -209,6 +209,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeMilesBoxWeekly: function() {
+        $("#today-button").removeClass("selected-miles");
+        $("#lifetime-button").removeClass("selected-miles");
+        $("#weekly-button").addClass("selected-miles");        
         var userId = document.getElementById("userId").innerHTML;
         var weekMiles = 0;
         $.get('/api/v1/rides/', function(response) {
@@ -277,7 +280,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeMilesBoxDaily: function() {
-        console.log("makeMilesBoxDaily connected");
+        $("#today-button").addClass("selected-miles");
+        $("#lifetime-button").removeClass("selected-miles");
+        $("#weekly-button").removeClass("selected-miles");
+
         var userId = document.getElementById("userId").innerHTML;
         var dailyMiles = 0;
         $.get('/api/v1/rides/', function(response) {
@@ -303,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeRankingsDaily: function() {
-        console.log("makeRankingsDaily connected");
         var userId = document.getElementById("userId").innerHTML;
         $.get("/api/v1/friendships/" + userId, function(response) {
           this.rankings = [];
@@ -312,7 +317,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
           var todayDate = todayFull.getDate();
           var todayMonth = todayFull.getMonth();
           var todayYear = todayFull.getFullYear();
-          var userDailyMiles = 0;
 
           for (var i = 0; i < response.length; i++) {
             var friendId = response[i].friend_id;
@@ -329,26 +333,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   friendDailyMiles += response[i].friend_rides[j].miles;
                   console.log("friendDailyMiles: " + friendDailyMiles);
                 }
- 
               }
             }
-            // if (goneThroughUserInfo) {
-            //   var userFirstName = response[i].user_first_name;
-            //   for (j = 0; j < response[i].user_rides.length; j++) {
-            //     if (response[i].user_rides[j].finished) {
-            //       rideMS = Date.parse(response[i].user_rides[j].updated_at);
-            //       if ((todayMS - rideMS) <= 604800000) {
-            //         userDailyMiles += response[i].user_rides[j].miles;
-            //       }
-            //     }
-            //   }
-            //   this.rankings.push({
-            //     userId: userId,
-            //     firstName: userFirstName,
-            //     miles: parseFloat(userDailyMiles.toFixed(2))
-            //   });
-            //   goneThroughUserInfo = false;
-            // }
+            if (goneThroughUserInfo) {
+              var userFirstName = response[i].user_first_name;
+              var userDailyMiles = 0;
+              for (j = 0; j < response[i].user_rides.length; j++) {
+                if (response[i].user_rides[j].finished) {
+                  rideFull = new Date(response[i].user_rides[j].updated_at);
+                  rideDate = rideFull.getDate();
+                  rideMonth = rideFull.getMonth();
+                  rideYear = rideFull.getFullYear();
+                }
+                if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
+                  userDailyMiles += response[i].user_rides[j].miles;
+                }
+              }
+              this.rankings.push({
+                userId: userId,
+                firstName: userFirstName,
+                miles: parseFloat(userDailyMiles.toFixed(2))
+              });
+              goneThroughUserInfo = false;
+            }
             
             this.rankings.push({
               userId: friendId,
@@ -361,6 +368,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeMilesBoxLifetime: function() {
+        $("#today-button").removeClass("selected-miles");
+        $("#lifetime-button").addClass("selected-miles");
+        $("#weekly-button").removeClass("selected-miles");
         var userId = document.getElementById("userId").innerHTML;
         $.get('/api/v1/users/' + userId, function(response) {
           this.miles = response.miles.toFixed(2);
