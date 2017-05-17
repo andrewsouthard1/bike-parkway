@@ -279,12 +279,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       makeMilesBoxDaily: function() {
         console.log("makeMilesBoxDaily connected");
         var userId = document.getElementById("userId").innerHTML;
-        var weekMiles = 0;
+        var dailyMiles = 0;
         $.get('/api/v1/rides/', function(response) {
           var todayFull = new Date();
-          // var rideMS = new Date(response[0].updated_at);
-          // console.log(todayMS);
-          // console.log(rideMS);
           var todayDate = todayFull.getDate();
           var todayMonth = todayFull.getMonth();
           var todayYear = todayFull.getFullYear();
@@ -297,64 +294,69 @@ document.addEventListener("DOMContentLoaded", function(event) {
               
               if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
                 console.log(response[i].miles);
-                weekMiles += response[i].miles;
+                dailyMiles += response[i].miles;
               }
-
-              
             }
           }
-          this.miles = weekMiles.toFixed(2);
+          this.miles = dailyMiles.toFixed(2);
         }.bind(this));
       },
 
       makeRankingsDaily: function() {
         console.log("makeRankingsDaily connected");
-        // var userId = document.getElementById("userId").innerHTML;
-        // $.get("/api/v1/friendships/" + userId, function(response) {
-          
-        //   this.rankings = [];
+        var userId = document.getElementById("userId").innerHTML;
+        $.get("/api/v1/friendships/" + userId, function(response) {
+          this.rankings = [];
+          var goneThroughUserInfo = true;
+          var todayFull = new Date();
+          var todayDate = todayFull.getDate();
+          var todayMonth = todayFull.getMonth();
+          var todayYear = todayFull.getFullYear();
+          var userDailyMiles = 0;
 
-        //   var goneThroughUserInfo = true;
-        //   for (var i = 0; i < response.length; i++) {
-        //     var friendId = response[i].friend_id;
-        //     var userWeeklyMiles = 0;
-        //     var friendWeeklyMiles = 0;
-        //     var userFirstName = response[i].user_first_name;
-        //     var friendFirstName = response[i].friend_first_name;
-        //     console.log(userFirstName);
-        //     var todayMS = Date.now();
-        //     for (var j = 0; j < response[i].friend_rides.length; j++) {
-        //       if (response[i].friend_rides[j].finished) {
-        //         var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
-        //         if ((todayMS - rideMS) <= 604800000) {
-        //           friendWeeklyMiles += response[i].friend_rides[j].miles;
-        //         }
-        //       }
-        //     }
-        //     if (goneThroughUserInfo) {
-        //       for (j = 0; j < response[i].user_rides.length; j++) {
-        //         if (response[i].user_rides[j].finished) {
-        //           rideMS = Date.parse(response[i].user_rides[j].updated_at);
-        //           if ((todayMS - rideMS) <= 604800000) {
-        //             userWeeklyMiles += response[i].user_rides[j].miles;
-        //           }
-        //         }
-        //       }
-        //       this.rankings.push({
-        //         userId: userId,
-        //         firstName: userFirstName,
-        //         miles: parseFloat(userWeeklyMiles.toFixed(2))
-        //       });
-        //       goneThroughUserInfo = false;
-        //     }
+          for (var i = 0; i < response.length; i++) {
+            var friendId = response[i].friend_id;
+            var friendDailyMiles = 0;
+            var friendFirstName = response[i].friend_first_name;
+            for (var j = 0; j < response[i].friend_rides.length; j++) {
+              if (response[i].friend_rides[j].finished) {
+                var rideFull = new Date(response[i].friend_rides[j].updated_at);
+                var rideDate = rideFull.getDate();
+                var rideMonth = rideFull.getMonth();
+                var rideYear = rideFull.getFullYear();
+                
+                if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
+                  friendDailyMiles += response[i].friend_rides[j].miles;
+                  console.log("friendDailyMiles: " + friendDailyMiles);
+                }
+ 
+              }
+            }
+            // if (goneThroughUserInfo) {
+            //   var userFirstName = response[i].user_first_name;
+            //   for (j = 0; j < response[i].user_rides.length; j++) {
+            //     if (response[i].user_rides[j].finished) {
+            //       rideMS = Date.parse(response[i].user_rides[j].updated_at);
+            //       if ((todayMS - rideMS) <= 604800000) {
+            //         userDailyMiles += response[i].user_rides[j].miles;
+            //       }
+            //     }
+            //   }
+            //   this.rankings.push({
+            //     userId: userId,
+            //     firstName: userFirstName,
+            //     miles: parseFloat(userDailyMiles.toFixed(2))
+            //   });
+            //   goneThroughUserInfo = false;
+            // }
             
-        //     this.rankings.push({
-        //       userId: friendId,
-        //       firstName: friendFirstName,
-        //       miles: parseFloat(friendWeeklyMiles.toFixed(2))
-        //     });
-        //   }
-        // }.bind(this));        
+            this.rankings.push({
+              userId: friendId,
+              firstName: friendFirstName,
+              miles: parseFloat(friendDailyMiles.toFixed(2))
+            });
+          }
+        }.bind(this));        
 
       },
 
