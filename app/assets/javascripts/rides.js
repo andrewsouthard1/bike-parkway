@@ -230,20 +230,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       makeRankingsWeekly: function() {
         var userId = document.getElementById("userId").innerHTML;
-        // this.rankings = [];
+        this.rankings = [];
+        var goneThroughUserInfo = false;
+        var userWeeklyMiles = 0;
+        var todayMS = Date.now();
         $.get("/api/v1/friendships/" + userId, function(response) {
-          
-          this.rankings = [];
-
-          var goneThroughUserInfo = true;
+      
           for (var i = 0; i < response.length; i++) {
             var friendId = response[i].friend_id;
-            var userWeeklyMiles = 0;
             var friendWeeklyMiles = 0;
             var userFirstName = response[i].user_first_name;
             var friendFirstName = response[i].friend_first_name;
             console.log(userFirstName);
-            var todayMS = Date.now();
             for (var j = 0; j < response[i].friend_rides.length; j++) {
               if (response[i].friend_rides[j].finished) {
                 var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
@@ -252,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
               }
             }
-            if (goneThroughUserInfo) {
+            if (!goneThroughUserInfo) {
               for (j = 0; j < response[i].user_rides.length; j++) {
                 if (response[i].user_rides[j].finished) {
                   rideMS = Date.parse(response[i].user_rides[j].updated_at);
@@ -266,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 firstName: userFirstName,
                 miles: parseFloat(userWeeklyMiles.toFixed(2))
               });
-              goneThroughUserInfo = false;
+              goneThroughUserInfo = true;
             }
             
             this.rankings.push({
@@ -276,6 +274,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
             });
           }
         }.bind(this));        
+
+        if (!goneThroughUserInfo) {
+          $.get("/api/v1/users/" + userId, function(response) {
+            for (var i = 0; i < response.user_rides.length; i++) {
+              if (response.user_rides[i].finished) {
+                var rideMS = Date.parse(response.user_rides[i].updated_at);
+                if ((todayMS - rideMS) <= 604800000) {
+                  userWeeklyMiles += response.user_rides[i].miles;
+                }
+              }
+            }
+            this.rankings.push({
+              userId: response.id,
+              firstName: response.firstName,
+              miles: parseFloat(userWeeklyMiles.toFixed(2))
+            });
+            goneThroughUserInfo = true;
+          }.bind(this));
+        }
 
       },
 
