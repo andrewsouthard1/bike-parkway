@@ -310,14 +310,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       makeRankingsDaily: function() {
         var userId = document.getElementById("userId").innerHTML;
+        var goneThroughUserInfo = false;
+        var todayFull = new Date();
+        var todayDate = todayFull.getDate();
+        var todayMonth = todayFull.getMonth();
+        var todayYear = todayFull.getFullYear();
+        this.rankings = [];
         $.get("/api/v1/friendships/" + userId, function(response) {
-          this.rankings = [];
-          var goneThroughUserInfo = true;
-          var todayFull = new Date();
-          var todayDate = todayFull.getDate();
-          var todayMonth = todayFull.getMonth();
-          var todayYear = todayFull.getFullYear();
-
           for (var i = 0; i < response.length; i++) {
             var friendId = response[i].friend_id;
             var friendDailyMiles = 0;
@@ -335,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
               }
             }
-            if (goneThroughUserInfo) {
+            if (!goneThroughUserInfo) {
               var userFirstName = response[i].user_first_name;
               var userDailyMiles = 0;
               for (j = 0; j < response[i].user_rides.length; j++) {
@@ -354,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 firstName: userFirstName,
                 miles: parseFloat(userDailyMiles.toFixed(2))
               });
-              goneThroughUserInfo = false;
+              goneThroughUserInfo = true;
             }
             
             this.rankings.push({
@@ -362,8 +361,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
               firstName: friendFirstName,
               miles: parseFloat(friendDailyMiles.toFixed(2))
             });
+
           }
         }.bind(this));        
+
+        if (!goneThroughUserInfo) {
+          $.get("/api/v1/users/" + userId, function(response) {
+            var userDailyMiles = 0;
+            for (var i = 0; i < response.user_rides.length; i++) {
+              if (response.user_rides[i].finished) {
+                var rideFull = new Date(response.user_rides[i].updated_at);
+                var rideDate = rideFull.getDate();
+                var rideMonth = rideFull.getMonth();
+                var rideYear = rideFull.getFullYear();
+              }
+              if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
+                userDailyMiles += response.user_rides[i].miles;
+              }
+            }
+
+            this.rankings.push({
+              userId: response.id,
+              firstName: response.firstName,
+              miles: parseFloat(userDailyMiles.toFixed(2))              
+            });
+            goneThroughUserInfo = true;
+          }.bind(this));
+        }
+
 
       },
 
@@ -378,21 +403,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeRankingsLifetime: function() {
+        var goneThroughUserInfo = false;
         var userId = document.getElementById("userId").innerHTML;
         $.get("/api/v1/friendships/" + userId, function(response) {
           
           this.rankings = [];
-
-          var goneThroughUserInfo = true;
           for (var i = 0; i < response.length; i++) {
-            if (goneThroughUserInfo) {
+            if (!goneThroughUserInfo) {
               this.rankings.push({
                 userId: userId,
                 firstName: response[i].user_first_name,
                 miles: parseFloat(response[i].user_miles.toFixed(2))
               });
-              goneThroughUserInfo = false;
-            }            
+              goneThroughUserInfo = true;
+            } 
+            console.log(goneThroughUserInfo);           
             
             this.rankings.push({
               userId: response[i].friend_id,
@@ -402,6 +427,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }
         }.bind(this));        
 
+        if (!goneThroughUserInfo) {
+          $.get("/api/v1/users/" + userId, function(response) {
+            this.rankings.push({
+              userId: response.id,
+              firstName: response.firstName,
+              miles: parseFloat(response.miles.toFixed(2))              
+            });
+            goneThroughUserInfo = true;
+          }.bind(this));
+        }
       }
     },
 
