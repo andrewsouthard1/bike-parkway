@@ -52,7 +52,7 @@
 <script>
 mapboxgl.accessToken = "<%= ENV['MAP_BOX_API'] %>";
 var start = [-74.0066, 40.7135];
-var end = [74.50, 40];
+var end = [-73.9851, 40.7589];
 
 var map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/light-v9',
@@ -65,8 +65,7 @@ var map = new mapboxgl.Map({
 
 // the 'building' layer in the mapbox-streets vector source contains building-height
 // data from OpenStreetMap.
-map.on('load', function() {
-  map.addLayer({
+var buildingLayer = {
     'id': '3d-buildings',
     'source': 'composite',
     'source-layer': 'building',
@@ -85,7 +84,10 @@ map.on('load', function() {
       },
       'fill-extrusion-opacity': .6
     }
-  });
+  }
+
+map.on('load', function() {
+  map.addLayer(buildingLayer);
 });
 
 var isAtStart = true;
@@ -98,17 +100,18 @@ document.getElementById('lastRide').addEventListener('click', function() {
     // and now we're at the opposite point
     isAtStart = !isAtStart;
 
+
     map.flyTo({
         // These options control the ending camera position: centered at
         // the target, at zoom level 9, and north up.
         center: target,
         zoom: 15,
         bearing: -17.6,
-
+        layers: [buildingLayer],
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 0.2, // make the flying slow
+        speed: 1, // make the flying slow
         curve: 1, // change the speed at which it zooms out
 
 
