@@ -57,7 +57,7 @@ var end = [-73.9851, 40.7589];
 var map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/light-v9',
   center: start,
-  zoom: 15,
+  zoom: 13,
   pitch: 45,
   bearing: -17.6,
   container: 'visMap'
@@ -71,7 +71,7 @@ var buildingLayer = {
     'source-layer': 'building',
     'filter': ['==', 'extrude', 'true'],
     'type': 'fill-extrusion',
-    'minzoom': 15,
+    'minzoom': 1,
     'paint': {
       'fill-extrusion-color': '#aaa',
       'fill-extrusion-height': {
@@ -82,7 +82,7 @@ var buildingLayer = {
         'type': 'identity',
         'property': 'min_height'
       },
-      'fill-extrusion-opacity': .6
+      'fill-extrusion-opacity': 1
     }
   }
 
@@ -104,15 +104,16 @@ document.getElementById('lastRide').addEventListener('click', function() {
     map.flyTo({
         // These options control the ending camera position: centered at
         // the target, at zoom level 9, and north up.
+        style: 'mapbox://styles/mapbox/light-v9',
         center: target,
-        zoom: 15,
+        zoom: 13,
         bearing: -17.6,
         layers: [buildingLayer],
         // These options control the flight curve, making it move
         // slowly and zoom out almost completely before starting
         // to pan.
-        speed: 1, // make the flying slow
-        curve: 1, // change the speed at which it zooms out
+        speed: .25, // make the flying slow
+        curve: .1, // change the speed at which it zooms out
 
 
         // This can be any easing function: it takes a number between
