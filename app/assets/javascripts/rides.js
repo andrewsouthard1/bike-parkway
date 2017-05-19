@@ -144,15 +144,15 @@ function getOriginLng(response) {
   return response.routes[0].legs[0].start_location.lng().toFixed(6);
 }
 
-function getWeather(lat, lng) {
-  $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response) {
-    var forecast = response.query.results.channel.item.forecast[0];
-    document.getElementById('weather-box').innerHTML = 
-    '<p>' + forecast.date + " High: " + forecast.high + " Low: " + forecast.low + " " + forecast.text + '</p>';
-    document.getElementById('weather-box').style.display = 'block';
-    console.log(response);
-  });
-}
+// function getWeather(lat, lng) {
+//   $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response) {
+//     var forecast = response.query.results.channel.item.forecast[0];
+//     document.getElementById('weather-box').innerHTML = 
+//     '<p>' + forecast.date + " High: " + forecast.high + " Low: " + forecast.low + " " + forecast.text + '</p>';
+//     document.getElementById('weather-box').style.display = 'block';
+//     console.log(response);
+//   });
+// }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   var app = new Vue({
@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       message: 'Hello Vue!',
       inProgressRides: [],
       rankings: [],
+      activityRides: [],
       startRideButton: '',
       miles: 0
     },
@@ -500,6 +501,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }
         }
       }.bind(this));
+
+      $.get("/api/v1/friendships/" + userId, function(response) {
+        for (var i = 0; i < response.length; i++) {
+          for (var j = 0; j < response[i].friend_rides.length; j++) {
+            this.activityRides.push({
+              userId: response[i].friend_rides[j].user_id,
+              firstName: response[i].friend_first_name,
+              miles: response[i].friend_rides[j].miles 
+            });
+          }
+        }
+      }.bind(this));
+
+      $.get("/api/v1/users/" + userId, function(response) {
+        for (var i = 0; i < response.user_rides.length; i++) {          
+          this.activityRides.push({
+            userId: response.id,
+            firstName: response.firstName,
+            miles: response.user_rides[i].miles 
+          });
+        }
+      }.bind(this));
+
+
+
+
+
     },
 
     computed: {
