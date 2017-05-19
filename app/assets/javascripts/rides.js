@@ -505,10 +505,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get("/api/v1/friendships/" + userId, function(response) {
         for (var i = 0; i < response.length; i++) {
           for (var j = 0; j < response[i].friend_rides.length; j++) {
+            
+            // if response[i].friend_comments.length 
+
+
             this.activityRides.push({
               userId: response[i].friend_rides[j].user_id,
               firstName: response[i].friend_first_name,
-              miles: response[i].friend_rides[j].miles 
+              miles: response[i].friend_rides[j].miles,
+
             });
           }
         }
