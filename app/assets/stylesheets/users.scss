@@ -7,38 +7,18 @@ hr {
   margin-right: 90%;
 }
 
-.bike-button {
-  border-radius: 1%;
-}
-.fa-trophy {
-  color: #D4AF37;
-}
-
-.friend-box-header {
-  background: #282B2A;
-  color: white;
-
-}
-
-.sort-button-row {
+#activity-box {
   background: white;
   color: #282B2A;
-  width: 80%;
-  margin: 0 auto;
-  padding-right: 10px;
-  text-align: right;
-  font-size: 15px;
+  text-align: center;
   text-transform: uppercase;
   border: 2.5px solid #282B2A;
+  border-radius: 1%;
   font-family: 'Comfortaa', cursive;
-}
-
-.selected-miles {
-  background: #282B2A;
-  color: white;
-  padding-top: 2.5px;
-  padding-bottom: 2.5px;
-  border-radius: 10%;
+  font-size: 30px;
+  overflow: hidden;
+  width: 80%;
+  margin: 20px auto;
 }
 
 #friend-box {
@@ -51,9 +31,10 @@ hr {
   font-family: 'Comfortaa', cursive;
   font-size: 30px;
   overflow: hidden;
-  width: 40%;
+  width: 80%;
   margin: 20px auto;
 }
+
 
 #users {
   color: white;
@@ -95,6 +76,40 @@ hr {
 
 #rideMiles{
   line-height: 30px;
+}
+
+.bike-button {
+  border-radius: 1%;
+}
+.fa-trophy {
+  color: #D4AF37;
+}
+
+.feature-box-header {
+  background: #282B2A;
+  color: white;
+
+}
+
+.sort-button-row {
+  background: white;
+  color: #282B2A;
+  width: 80%;
+  margin: 0 auto;
+  padding-right: 10px;
+  text-align: right;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: 2.5px solid #282B2A;
+  font-family: 'Comfortaa', cursive;
+}
+
+.selected-miles {
+  background: #282B2A;
+  color: white;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+  border-radius: 10%;
 }
 
 .in-progress-bar {
