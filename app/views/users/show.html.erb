@@ -39,8 +39,12 @@
 
   <div id="activity-box">
     <div class="feature-box-header">Activity</div>
-      <div id="activityRides">
-        {{ activityRides }}
+      <div id="activityRides" v-for="ride in activityRides">
+        <div>
+        {{ ride.firstName }}
+        {{ ride.miles }}
+        {{ ride.date }}
+        </div>
       </div>
     </div>
   </div>

@@ -41,7 +41,7 @@ function initMap() {
         }
       ]
     },
-    {}]
+    {}];
 
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
@@ -108,6 +108,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
       displayMiles(response);
       // getWeather(getOriginLat(response), getOriginLng(response));
       me.directionsDisplay.setDirections(response);
+      window.alert('Directions service is going through');
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -507,25 +508,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
           for (var j = 0; j < response[i].friend_rides.length; j++) {
             
             // if response[i].friend_comments.length 
-
-
+          if (response[i].friend_rides[j].finished) {
+            var rideDate = new Date(response[i].friend_rides[j].updated_at);
+            var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
               userId: response[i].friend_rides[j].user_id,
               firstName: response[i].friend_first_name,
               miles: response[i].friend_rides[j].miles,
-
+              date: rideDateString
             });
+          }  
           }
         }
       }.bind(this));
 
       $.get("/api/v1/users/" + userId, function(response) {
-        for (var i = 0; i < response.user_rides.length; i++) {          
-          this.activityRides.push({
-            userId: response.id,
-            firstName: response.firstName,
-            miles: response.user_rides[i].miles 
-          });
+        for (var i = 0; i < response.user_rides.length; i++) {    
+          if (response.user_rides[i].finished) {        
+            var rideDate = new Date(response.user_rides[i].updated_at);
+            var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+            this.activityRides.push({
+              userId: response.id,
+              firstName: response.firstName,
+              miles: response.user_rides[i].miles,
+              date: rideDateString,
+            });
+          }
         }
       }.bind(this));
 
