@@ -489,6 +489,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var commentText = document.getElementById(rideId).value;
         console.log(commentText);
         console.log(rideId);
+        var commentData = {'comment': commentText};
+        $.ajax({
+          url: '/api/v1/rides/' + rideId, 
+          method: "PUT",
+          data: commentData
+        });
       },
 
       likeRide: function() {

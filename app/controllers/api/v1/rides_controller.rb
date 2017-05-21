@@ -31,27 +31,36 @@ class Api::V1::RidesController < ApplicationController
   def update
     ride = Ride.find_by(id: params[:id])
     user = User.find_by(id: ride.user_id)
+    if (params[:miles])
+      if user.miles == nil
+        new_miles = ride.miles
+      else
+        new_miles = ride.miles + user.miles
+      end
+      p "new_miles#{new_miles}"
 
-    if user.miles == nil
-      new_miles = ride.miles
+      @ride_updated = ride.update(
+        in_progress: false,
+        finished: true
+      )
+
+      @user_update = user.update(
+        miles: new_miles
+      )
+
+      if @ride_updated && @user_update
+        render json: {ride: "completed"} 
+      else
+        render json: {error: "error"}, status: 422
+      end
+    elsif (params[:comment])
+      comment = Comment.create(
+        user_id: current_user.id,
+        ride_id: ride.id,
+        comment_text: params[:comment]
+      )
     else
-      new_miles = ride.miles + user.miles
-    end
-    p "new_miles#{new_miles}"
-
-    @ride_updated = ride.update(
-      in_progress: false,
-      finished: true
-    )
-
-    @user_update = user.update(
-      miles: new_miles
-    )
-
-    if @ride_updated && @user_update
-      render json: {ride: "completed"} 
-    else
-      render json: {error: "error"}, status: 422
+      p "comment conditional did not hit and neither did params[:miles]"
     end
   end
 end
