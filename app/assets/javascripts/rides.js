@@ -533,76 +533,110 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       }.bind(this));
 
-      $.get("/api/v1/friendships/" + userId, function(response) {
-        for (var i = 0; i < response.length; i++) {
-          var friendComments = response[i].friend_comments;
-          for (var j = 0; j < response[i].friend_rides.length; j++) {
+    $.get("/api/v1/rides", function(response) {
+      for (var i = 0; i < response.length; i++) {
+        // ride is finished and the user is not null
+
+        if (response[i].finished && response[i].user_id) {
+          // ride belongs to current user
+          if (response[i].user_id.toString() === userId) {
+          //get comments that belong to this ride
+          
+                }
+              }
+            });
+
+          }
+
+          // }
+        } else {
+          console.log("These will be friend rides");
+        }
+      }
+    }.bind(this));
+
+      //       this.activityRides.push({
+      //         rideId: response[i].friend_rides[j].id,
+      //         userId: response[i].friend_rides[j].user_id,
+      //         firstName: response[i].friend_first_name,
+      //         miles: response[i].friend_rides[j].miles,
+      //         date: rideDateString,
+      //         timeRidden: rideDate,
+      //         rideComments: rideComments
+      //       });
+
+
+
+      // $.get("/api/v1/friendships/" + userId, function(response) {
+      //   for (var i = 0; i < response.length; i++) {
+      //     var friendComments = response[i].friend_comments;
+      //     for (var j = 0; j < response[i].friend_rides.length; j++) {
             
-            // if response[i].friend_comments.length 
-          if (response[i].friend_rides[j].finished) {
-            var rideDate = new Date(response[i].friend_rides[j].updated_at);
-            var timeAdded = new Date();
-            var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+      //       // if response[i].friend_comments.length 
+      //     if (response[i].friend_rides[j].finished) {
+      //       var rideDate = new Date(response[i].friend_rides[j].updated_at);
+      //       var timeAdded = new Date();
+      //       var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
 
-            if (friendComments.length > 0) {
-              var rideComments = [];
-              for (var f = 0; f < friendComments.length; f++) {
-                if (friendComments[f].ride_id === response[i].friend_rides[j].id) {
-                  var comment = {
-                    user: response[i].friend_first_name,
-                    text: friendComments[f].comment_text
-                  };
-                  rideComments.push(comment);
-                }
-              }
-            }
-            this.activityRides.push({
-              rideId: response[i].friend_rides[j].id,
-              userId: response[i].friend_rides[j].user_id,
-              firstName: response[i].friend_first_name,
-              miles: response[i].friend_rides[j].miles,
-              date: rideDateString,
-              timeRidden: rideDate,
-              rideComments: rideComments
-            });
-          }  
-          }
-        }
-      }.bind(this));
+      //       if (friendComments.length > 0) {
+      //         var rideComments = [];
+      //         for (var f = 0; f < friendComments.length; f++) {
+      //           if (friendComments[f].ride_id === response[i].friend_rides[j].id) {
+      //             var comment = {
+      //               user: response[i].friend_first_name,
+      //               text: friendComments[f].comment_text
+      //             };
+      //             rideComments.push(comment);
+      //           }
+      //         }
+      //       }
+      //       this.activityRides.push({
+      //         rideId: response[i].friend_rides[j].id,
+      //         userId: response[i].friend_rides[j].user_id,
+      //         firstName: response[i].friend_first_name,
+      //         miles: response[i].friend_rides[j].miles,
+      //         date: rideDateString,
+      //         timeRidden: rideDate,
+      //         rideComments: rideComments
+      //       });
+      //     }  
+      //     }
+      //   }
+      // }.bind(this));
 
-      $.get("/api/v1/users/" + userId, function(response) {
-        for (var i = 0; i < response.user_rides.length; i++) {    
-          if (response.user_rides[i].finished) {        
-            var rideComments = [];
-            var rideDate = new Date(response.user_rides[i].updated_at);
-            var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
-            if (response.commentsFromFriends.length > 0) {
-              for (var f = 0; f < response.commentsFromFriends.length; f++) {
-                console.log(response.commentsFromFriends[f][0].ride_id + "response.commentsFromFriends[f]");
-                if (response.commentsFromFriends[f][0].ride_id === response.user_rides[i].id) {
-                  console.log("we made it to this conditional");
-                  var comment = {
-                    user: "BILLY",
-                    text: response.commentsFromFriends[f][0].comment_text
-                  };
-                  rideComments.push(comment);
-                }
-              }
+      // $.get("/api/v1/users/" + userId, function(response) {
+      //   for (var i = 0; i < response.user_rides.length; i++) {    
+      //     if (response.user_rides[i].finished) {        
+      //       var rideComments = [];
+      //       var rideDate = new Date(response.user_rides[i].updated_at);
+      //       var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+      //       if (response.commentsFromFriends.length > 0) {
+      //         for (var f = 0; f < response.commentsFromFriends.length; f++) {
+      //           console.log(response.commentsFromFriends[f][0].ride_id + "response.commentsFromFriends[f]");
+      //           if (response.commentsFromFriends[f][0].ride_id === response.user_rides[i].id) {
+      //             console.log("we made it to this conditional");
+      //             var comment = {
+      //               user: "BILLY",
+      //               text: response.commentsFromFriends[f][0].comment_text
+      //             };
+      //             rideComments.push(comment);
+      //           }
+      //         }
 
-            }
+      //       }
 
-            this.activityRides.push({
-              rideId: response.user_rides[i].id,
-              userId: userId,
-              firstName: response.firstName,
-              miles: response.user_rides[i].miles,
-              date: rideDateString,
-              timeRidden: rideDate,
-              rideComments: rideComments
-            });
-          }
-        }
-      }.bind(this));
+      //       this.activityRides.push({
+      //         rideId: response.user_rides[i].id,
+      //         userId: userId,
+      //         firstName: response.firstName,
+      //         miles: response.user_rides[i].miles,
+      //         date: rideDateString,
+      //         timeRidden: rideDate,
+      //         rideComments: rideComments
+      //       });
+      //     }
+      //   }
+      // }.bind(this));
     },
 
     computed: {

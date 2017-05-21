@@ -12,4 +12,5 @@ json.array! @rides.each do |ride|
   if User.find_by(id: ride.user_id)
     json.first_name User.find_by(id: ride.user_id).first_name
   end
+  
 end
