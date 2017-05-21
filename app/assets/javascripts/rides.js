@@ -202,6 +202,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
             this.rankings[i].miles = displayMiles.toFixed(2);
           }
         }
+        var rideDate = new Date();
+
+        $.get("/api/v1/users/" + userId, function(response) {
+          for (var i = response.user_rides.length - 1; i > 0; i--) {    
+              if (response.user_rides[i].id === ride.id) {
+                console.log(ride.id);
+                var rideDate = new Date(response.user_rides[i].updated_at);
+                var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+                console.log(ride);
+                this.activityRides.push({
+                  userId: response.id,
+                  firstName: response.firstName,
+                  miles: response.user_rides[i].miles,
+                  date: rideDateString,
+                  timeRidden: rideDate
+                });
+                break;
+            }
+          }
+
+        }.bind(this));
       },
       showRide: function(ride) {
         return ride.in_progress === true;
@@ -510,12 +531,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
             // if response[i].friend_comments.length 
           if (response[i].friend_rides[j].finished) {
             var rideDate = new Date(response[i].friend_rides[j].updated_at);
+            var timeAdded = new Date();
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
               userId: response[i].friend_rides[j].user_id,
               firstName: response[i].friend_first_name,
               miles: response[i].friend_rides[j].miles,
-              date: rideDateString
+              date: rideDateString,
+              timeRidden: rideDate
             });
           }  
           }
@@ -532,21 +555,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
               firstName: response.firstName,
               miles: response.user_rides[i].miles,
               date: rideDateString,
+              timeRidden: rideDate
             });
           }
         }
       }.bind(this));
-
-
-
-
-
     },
 
     computed: {
       sortedFriends: function() {
         return this.rankings.sort(function(friend1, friend2) {
           return friend1.miles < friend2.miles;
+        }.bind(this));
+      },
+
+      sortedRides: function() {
+        return this.activityRides.sort(function(ride1, ride2) {
+          return new Date(ride2.timeRidden) - new Date(ride1.timeRidden);
         }.bind(this));
       }
     }
