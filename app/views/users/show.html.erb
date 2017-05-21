@@ -44,7 +44,7 @@
         {{ ride.firstName }} rode {{ ride.miles }} miles.
         {{ ride.date }}
         </div>
-        <input type="text" placeholder="Write comment" v-bind:id="'ride' + ride.rideId"></input>
+        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
         Like
       </div>

@@ -217,7 +217,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
                 console.log(ride);
                 this.activityRides.push({
-                  userId: response.id,
+                  rideId: response.user_rides[i].id,
+                  userId: userId,
                   firstName: response.firstName,
                   miles: response.user_rides[i].miles,
                   date: rideDateString,
@@ -484,9 +485,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       },
 
-      addComment: function() {
-        
-        console.log("comment added");
+      addComment: function(rideId) {
+        var commentText = document.getElementById(rideId).value;
+        console.log(commentText);
+        console.log(rideId);
       },
 
       likeRide: function() {
@@ -566,7 +568,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var rideDate = new Date(response.user_rides[i].updated_at);
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
-              rideId: response.id,
+              rideId: response.user_rides[i].id,
               userId: userId,
               firstName: response.firstName,
               miles: response.user_rides[i].miles,
