@@ -39,16 +39,13 @@
 
   <div id="activity-box">
     <div class="feature-box-header">Activity</div>
-      <div id="activityRides" v-for="ride in sortedRides">
+      <div class="activityRides" v-for="ride in sortedRides">
         <div>
         {{ ride.firstName }} rode {{ ride.miles }} miles.
         {{ ride.date }}
-        <input 
-          v-model="commentBox" 
-          placeholder="Write comment here..."
-          v-on:keyup.enter="addComment"
-        ></div>
-        <i v-on:click="likeRide()"class="fa fa-thumbs-up" aria-hidden="true"></i>
+        </div>
+        <input type="text" placeholder="Write comment" v-bind:id="'ride' + ride.rideId"></input>
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
         Like
       </div>
     </div>

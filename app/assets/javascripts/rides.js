@@ -145,6 +145,10 @@ function getOriginLng(response) {
   return response.routes[0].legs[0].start_location.lng().toFixed(6);
 }
 
+function htmlEntities(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 // function getWeather(lat, lng) {
 //   $.get("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text='(" + lat + "," + lng + ")')&format=json", function(response) {
 //     var forecast = response.query.results.channel.item.forecast[0];
@@ -164,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       rankings: [],
       activityRides: [],
       startRideButton: '',
-      commentBox: '',
+      socialBox: [],
       miles: 0
     },
     methods: {
@@ -481,12 +485,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       addComment: function() {
+        
         console.log("comment added");
       },
 
       likeRide: function() {
         console.log("ride liked");
-      }
+      },
 
     },
     mounted: function() {
@@ -543,6 +548,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var timeAdded = new Date();
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
+              rideId: response[i].friend_rides[j].id,
               userId: response[i].friend_rides[j].user_id,
               firstName: response[i].friend_first_name,
               miles: response[i].friend_rides[j].miles,
@@ -560,11 +566,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var rideDate = new Date(response.user_rides[i].updated_at);
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
-              userId: response.id,
+              rideId: response.id,
+              userId: userId,
               firstName: response.firstName,
               miles: response.user_rides[i].miles,
               date: rideDateString,
-              timeRidden: rideDate
+              timeRidden: rideDate,
             });
           }
         }
@@ -586,6 +593,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
   });
 });
-
-
 
