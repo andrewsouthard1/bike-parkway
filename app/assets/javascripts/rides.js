@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       rankings: [],
       activityRides: [],
       startRideButton: '',
+      commentBox: '',
       miles: 0
     },
     methods: {
@@ -477,9 +478,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
             goneThroughUserInfo = true;
           }.bind(this));
         }
-      }
-    },
+      },
 
+      addComment: function() {
+        console.log("comment added");
+      },
+
+      likeRide: function() {
+        console.log("ride liked");
+      }
+
+    },
     mounted: function() {
       var userId = document.getElementById("userId").innerHTML;
       $.get("/api/v1/rides", function(response) {

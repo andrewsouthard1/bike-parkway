@@ -41,10 +41,15 @@
     <div class="feature-box-header">Activity</div>
       <div id="activityRides" v-for="ride in sortedRides">
         <div>
-        {{ ride.firstName }}
-        {{ ride.miles }}
+        {{ ride.firstName }} rode {{ ride.miles }} miles.
         {{ ride.date }}
-        </div>
+        <input 
+          v-model="commentBox" 
+          placeholder="Write comment here..."
+          v-on:keyup.enter="addComment"
+        ></div>
+        <i v-on:click="likeRide()"class="fa fa-thumbs-up" aria-hidden="true"></i>
+        Like
       </div>
     </div>
   </div>
