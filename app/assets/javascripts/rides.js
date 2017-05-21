@@ -181,14 +181,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
           user_id: parseInt(document.querySelector('#user-id').innerHTML),
           top_five: false
         };
-        console.log(parameters);
         $.post('api/v1/rides', parameters, function(response) {
-          console.log(response);
           this.inProgressRides.push(response);
         }.bind(this));
       },
       finishRide: function(ride) {
-        console.log(ride.id);
         var testData = {'miles': ride.miles};
         $.ajax({
           url: '/api/v1/rides/' + ride.id, 
@@ -198,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var index = this.inProgressRides.indexOf(ride);
         this.inProgressRides.splice(index, 1);
         var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
-        console.log(displayMiles);
         this.miles = displayMiles.toFixed(2);
         var userId = document.getElementById("userId").innerHTML;
         for (var i = 0; i < this.rankings.length; i++) {
@@ -211,10 +207,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $.get("/api/v1/users/" + userId, function(response) {
           for (var i = response.user_rides.length - 1; i > 0; i--) {    
               if (response.user_rides[i].id === ride.id) {
-                console.log(ride.id);
                 var rideDate = new Date(response.user_rides[i].updated_at);
                 var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
-                console.log(ride);
                 this.activityRides.push({
                   rideId: response.user_rides[i].id,
                   userId: userId,
@@ -269,7 +263,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var friendWeeklyMiles = 0;
             var userFirstName = response[i].user_first_name;
             var friendFirstName = response[i].friend_first_name;
-            console.log(userFirstName);
             for (var j = 0; j < response[i].friend_rides.length; j++) {
               if (response[i].friend_rides[j].finished) {
                 var rideMS = Date.parse(response[i].friend_rides[j].updated_at);
@@ -344,7 +337,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
               var rideYear = rideFull.getFullYear();
               
               if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
-                console.log(response[i].miles);
                 dailyMiles += response[i].miles;
               }
             }
@@ -375,7 +367,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 
                 if ((todayDate === rideDate) && (todayMonth === rideMonth) && (todayYear === rideYear)) {
                   friendDailyMiles += response[i].friend_rides[j].miles;
-                  console.log("friendDailyMiles: " + friendDailyMiles);
                 }
               }
             }
@@ -462,7 +453,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
               });
               goneThroughUserInfo = true;
             } 
-            console.log(goneThroughUserInfo);           
             
             this.rankings.push({
               userId: response[i].friend_id,
@@ -486,8 +476,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       addComment: function(rideId) {
         var commentText = document.getElementById(rideId).value;
-        console.log(commentText);
-        console.log(rideId);
         var commentData = {'comment': commentText};
         $.ajax({
           url: '/api/v1/rides/' + rideId, 
@@ -548,7 +536,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get("/api/v1/friendships/" + userId, function(response) {
         for (var i = 0; i < response.length; i++) {
           var friendComments = response[i].friend_comments;
-          console.log(friendComments);
           for (var j = 0; j < response[i].friend_rides.length; j++) {
             
             // if response[i].friend_comments.length 
@@ -559,7 +546,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             if (friendComments.length > 0) {
               var rideComments = [];
-              console.log(response[i].friend_first_name);
               for (var f = 0; f < friendComments.length; f++) {
                 if (friendComments[f].ride_id === response[i].friend_rides[j].id) {
                   var comment = {
@@ -587,8 +573,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get("/api/v1/users/" + userId, function(response) {
         for (var i = 0; i < response.user_rides.length; i++) {    
           if (response.user_rides[i].finished) {        
+            var rideComments = [];
             var rideDate = new Date(response.user_rides[i].updated_at);
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+            if (response.commentsFromFriends.length > 0) {
+              for (var f = 0; f < response.commentsFromFriends.length; f++) {
+                console.log(response.commentsFromFriends[f][0].ride_id + "response.commentsFromFriends[f]");
+                if (response.commentsFromFriends[f][0].ride_id === response.user_rides[i].id) {
+                  console.log("we made it to this conditional");
+                  var comment = {
+                    user: "BILLY",
+                    text: response.commentsFromFriends[f][0].comment_text
+                  };
+                  rideComments.push(comment);
+                }
+              }
+
+            }
+
             this.activityRides.push({
               rideId: response.user_rides[i].id,
               userId: userId,
@@ -596,6 +598,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               miles: response.user_rides[i].miles,
               date: rideDateString,
               timeRidden: rideDate,
+              rideComments: rideComments
             });
           }
         }

@@ -10,5 +10,6 @@ Ride.where(user_id: @user.id).each do |ride|
     friend_comments.push(ride.comments)
   end
 end
+
 json.profilePictureUrl @user.profile_picture_url
 json.commentsFromFriends friend_comments
