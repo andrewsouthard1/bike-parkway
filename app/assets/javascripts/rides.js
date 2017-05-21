@@ -168,7 +168,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       rankings: [],
       activityRides: [],
       startRideButton: '',
-      socialBox: [],
       miles: 0
     },
     methods: {
@@ -548,6 +547,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       $.get("/api/v1/friendships/" + userId, function(response) {
         for (var i = 0; i < response.length; i++) {
+          var friendComments = response[i].friend_comments;
+          console.log(friendComments);
           for (var j = 0; j < response[i].friend_rides.length; j++) {
             
             // if response[i].friend_comments.length 
@@ -555,13 +556,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var rideDate = new Date(response[i].friend_rides[j].updated_at);
             var timeAdded = new Date();
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+
+            if (friendComments.length > 0) {
+              var rideComments = [];
+              console.log(response[i].friend_first_name);
+              for (var f = 0; f < friendComments.length; f++) {
+                if (friendComments[f].ride_id === response[i].friend_rides[j].id) {
+                  var comment = {
+                    user: response[i].friend_first_name,
+                    text: friendComments[f].comment_text
+                  };
+                  rideComments.push(comment);
+                }
+              }
+            }
             this.activityRides.push({
               rideId: response[i].friend_rides[j].id,
               userId: response[i].friend_rides[j].user_id,
               firstName: response[i].friend_first_name,
               miles: response[i].friend_rides[j].miles,
               date: rideDateString,
-              timeRidden: rideDate
+              timeRidden: rideDate,
+              rideComments: rideComments
             });
           }  
           }
