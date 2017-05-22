@@ -38,14 +38,22 @@
   </div>
 
   <div id="activity-box">
-    <div class="feature-box-header">Activity</div>
+    <div class="feature-box-header">Road Activity</div>
       <div class="activityRides" v-for="ride in sortedRides">
         <div>
           <i class="fa fa-road" aria-hidden="true"></i>
-          {{ ride.firstName }} rode {{ ride.miles }} miles.
+          {{ ride.firstName }} biked {{ ride.miles }} miles.
           {{ ride.date }}
         </div>
-        <div v-bind:id="'like' + ride.rideId"><i class="fa fa-thumbs-up" aria-hidden="true" v-on:click="likeRide(ride.rideId)"></i>Like</div>
+        <div v-bind:id="'like' + ride.rideId">
+          <div v-if="isLikedByUser(ride.rideId)">
+              IS LIKED ALREADY
+          </div>
+          <div v-else>
+            <i class="fa fa-thumbs-up" aria-hidden="true" v-on:click="likeRide(ride.rideId)"></i>
+            Like
+          </div>
+        </div>
         <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
         <div v-bind:id="'comment' + ride.rideId">
           <div v-for="comment in ride.rideComments">

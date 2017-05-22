@@ -25,6 +25,7 @@ class Api::V1::RidesController < ApplicationController
 
   def show
     @ride = Ride.find_by(id: params[:id])
+    @likes = Like.where(ride_id: params[:id])
     render 'show.json.jbuilder'
   end
 
@@ -65,13 +66,14 @@ class Api::V1::RidesController < ApplicationController
       p "***********************"
       like = Like.find_by(ride_id: ride.id, user_id: user.id)
       if !like
-        like.create(
+        Like.create(
           user_id: current_user.id,
           ride_id: ride.id
         )
       else
         like.destroy
       end
+      p like
     else
       p "comment conditional did not hit and neither did params[:miles]"
     end

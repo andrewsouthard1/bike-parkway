@@ -6,3 +6,4 @@ json.in_progress @ride.in_progress
 json.finished @ride.finished 
 json.user_id @ride.user_id
 json.top_five @ride.top_five
+json.likes @likes

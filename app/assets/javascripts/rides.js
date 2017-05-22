@@ -503,6 +503,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
           data: likeData
         });
       },
+
+      isLikedByUser: function(rideId) {
+        return false;
+        // $.get("/api/v1/rides/" + rideId, function(response){
+          // if (response.likes.length > 0) {
+          //   for (var i = 0; i < response.likes; i++) {
+          //     console.log("WEVE GOT LIKES");
+          //     return false;
+          //   }
+          // } else {
+          //   console.log("NO LIKES");
+          //   return true;
+          // }
+        // });
+      }
     },
     mounted: function() {
       var userId = document.getElementById("userId").innerHTML;
