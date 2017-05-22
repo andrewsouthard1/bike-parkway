@@ -533,26 +533,41 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       }.bind(this));
 
+    // Fill activity log with rides and comments of that ride
     $.get("/api/v1/rides", function(response) {
+      var userFriends = {};
       for (var i = 0; i < response.length; i++) {
+        
         // ride is finished and the user is not null
-
         if (response[i].finished && response[i].user_id) {
-          // ride belongs to current user
-          if (response[i].user_id.toString() === userId) {
-          //get comments that belong to this ride
           
-                }
-              }
-            });
+          if (response[i].user_id.toString() === userId) {
+            for (var j = 0; j < response[i].user.friendship_info.length; j++) {
+              var friendId = response[i].user.friendship_info[j].friend_id;
+              userFriends[friendId] = 1;
+            }
 
+            
           }
+ 
+          // ride belongs to current user
+        }  
+        
+      }
 
-          // }
-        } else {
-          console.log("These will be friend rides");
+      userFriends = Object.keys(userFriends);
+      for (i = 0; i < userFriends.length; i++) {
+        for (j = 0; j < response.length; j++) {
+          if (response[j].finished && response[j].user_id) {
+
+            if (response[j].user_id.toString() === userFriends[i]) {
+              console.log("friends ride: " + response[j]);
+            }
+          }
         }
       }
+
+
     }.bind(this));
 
       //       this.activityRides.push({
