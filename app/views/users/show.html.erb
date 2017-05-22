@@ -41,17 +41,18 @@
     <div class="feature-box-header">Activity</div>
       <div class="activityRides" v-for="ride in sortedRides">
         <div>
-          {{ ride.rideId }}
+          <i class="fa fa-road" aria-hidden="true"></i>
           {{ ride.firstName }} rode {{ ride.miles }} miles.
           {{ ride.date }}
         </div>
-        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId, this)"></input>
-        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        <div v-for="comment in ride.rideComments" v-bind:id="'comment' + ride.rideId">
-          {{ comment.comment_text }}
-          {{ comment.user_id }}
+        <div v-bind:id="'like' + ride.rideId"><i class="fa fa-thumbs-up" aria-hidden="true" v-on:click="likeRide(ride.rideId)"></i>Like</div>
+        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
+        <div v-bind:id="'comment' + ride.rideId">
+          <div v-for="comment in ride.rideComments">
+            {{ comment.comment_text }}
+            {{ comment.user_id }}
+          </div>
         </div>
-        Like
       </div>
     </div>
   </div>

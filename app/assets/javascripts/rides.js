@@ -474,11 +474,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       },
 
-      addComment: function(rideId, someThis) {
+      addComment: function(rideId) {
         var commentText = document.getElementById(rideId).value;
         var commentData = {'comment': commentText};
-        document.getElementById('comment' + rideId).innerHTML += '<div>' + commentText + '</div>' ;
-        console.log(someThis);
+        if (document.getElementById('comment' + rideId)) {
+          document.getElementById('comment' + rideId).innerHTML += '<div>' + commentText + '</div>' ;
+        }
         $.ajax({
           url: '/api/v1/rides/' + rideId, 
           method: "PUT",
@@ -493,10 +494,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
       },
 
-      likeRide: function() {
+      likeRide: function(rideId) {
         console.log("ride liked");
+        var likeData = {'liked': true};
+        $.ajax({
+          url: '/api/v1/rides/' + rideId,
+          method: "PUT",
+          data: likeData
+        });
       },
-
     },
     mounted: function() {
       var userId = document.getElementById("userId").innerHTML;
@@ -559,7 +565,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
             var rideDate = new Date(response[i].updated_at);
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
-
             this.activityRides.push({
               rideId: response[i].id,
               firstName: response[i].user.first_name,

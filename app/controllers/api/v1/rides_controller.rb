@@ -59,6 +59,10 @@ class Api::V1::RidesController < ApplicationController
         ride_id: ride.id,
         comment_text: params[:comment]
       )
+    elsif (params[:liked])
+      p "***********************"
+      p "LIKED conditional is up"
+      p "***********************"
     else
       p "comment conditional did not hit and neither did params[:miles]"
     end
