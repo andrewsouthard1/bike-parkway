@@ -534,7 +534,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }.bind(this));
 
     // Fill activity log with rides and comments of that ride
+
     $.get("/api/v1/rides", function(response) {
+      
+      // get rides from current user
       var userFriends = {};
       for (var i = 0; i < response.length; i++) {
         
@@ -546,15 +549,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
               var friendId = response[i].user.friendship_info[j].friend_id;
               userFriends[friendId] = 1;
             }
+            var rideDate = new Date(response[i].updated_at);
+            var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
 
-            
+            this.activityRides.push({
+              rideId: response[i].id,
+              firstName: response[i].user.first_name,
+              miles: response[i].miles,
+              date: rideDateString,
+              timeRidden: rideDate,
+              rideComments: response[i].comments
+            });
+
           }
  
-          // ride belongs to current user
         }  
         
       }
 
+      //get rides from users friends
       userFriends = Object.keys(userFriends);
       for (i = 0; i < userFriends.length; i++) {
         for (j = 0; j < response.length; j++) {
@@ -562,6 +575,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             if (response[j].user_id.toString() === userFriends[i]) {
               console.log("friends ride: " + response[j]);
+              
+              rideDate = new Date(response[i].updated_at);
+              rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+
+              this.activityRides.push({
+                rideId: response[j].id,
+                firstName: response[j].user.first_name,
+                miles: response[j].miles,
+                date: rideDateString,
+                timeRidden: rideDate,
+                rideComments: response[j].comments
+              });
             }
           }
         }
@@ -570,17 +595,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     }.bind(this));
 
-      //       this.activityRides.push({
-      //         rideId: response[i].friend_rides[j].id,
-      //         userId: response[i].friend_rides[j].user_id,
-      //         firstName: response[i].friend_first_name,
-      //         miles: response[i].friend_rides[j].miles,
-      //         date: rideDateString,
-      //         timeRidden: rideDate,
-      //         rideComments: rideComments
-      //       });
-
-
+    
 
       // $.get("/api/v1/friendships/" + userId, function(response) {
       //   for (var i = 0; i < response.length; i++) {
