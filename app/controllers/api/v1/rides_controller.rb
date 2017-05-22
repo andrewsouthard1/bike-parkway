@@ -63,6 +63,15 @@ class Api::V1::RidesController < ApplicationController
       p "***********************"
       p "LIKED conditional is up"
       p "***********************"
+      like = Like.find_by(ride_id: ride.id, user_id: user.id)
+      if !like
+        like.create(
+          user_id: current_user.id,
+          ride_id: ride.id
+        )
+      else
+        like.destroy
+      end
     else
       p "comment conditional did not hit and neither did params[:miles]"
     end
