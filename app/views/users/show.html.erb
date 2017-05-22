@@ -45,10 +45,11 @@
           {{ ride.firstName }} rode {{ ride.miles }} miles.
           {{ ride.date }}
         </div>
-        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
+        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId, this)"></input>
         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        <div>
-          {{ ride.rideComments }}
+        <div v-for="comment in ride.rideComments" v-bind:id="'comment' + ride.rideId">
+          {{ comment.comment_text }}
+          {{ comment.user_id }}
         </div>
         Like
       </div>
