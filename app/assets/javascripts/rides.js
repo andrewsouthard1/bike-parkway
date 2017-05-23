@@ -168,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       rankings: [],
       activityRides: [],
       startRideButton: '',
+      isLiked: false,
       miles: 0
     },
     methods: {
@@ -494,30 +495,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
       },
 
+      // toggle the green and black
       likeRide: function(rideId) {
         console.log("ride liked");
         var likeData = {'liked': true};
+        var userId = document.getElementById("userId").innerHTML;
+
         $.ajax({
           url: '/api/v1/rides/' + rideId,
           method: "PUT",
           data: likeData
+        }).done( function() {
+          $.get("/api/v1/rides/" + rideId, function(response) {
+            if (response.likes.length > 0) {
+            for (var i = 0; i < response.likes.length; i++) {
+            // console.log(response.likes[i].user_id.toString() === userId);
+              if (response.likes[i].user_id.toString() === userId){
+                document.getElementById("like" + rideId).style.color = '#4ab678';
+              }
+              else {
+                document.getElementById("like" + rideId).style.color = 'black';
+              } 
+            } 
+            }
+          });
         });
       },
 
-      isLikedByUser: function(rideId) {
-        return false;
-        // $.get("/api/v1/rides/" + rideId, function(response){
-          // if (response.likes.length > 0) {
-          //   for (var i = 0; i < response.likes; i++) {
-          //     console.log("WEVE GOT LIKES");
-          //     return false;
-          //   }
-          // } else {
-          //   console.log("NO LIKES");
-          //   return true;
-          // }
-        // });
-      }
+      // isLikedByUser: function(rideId) {
+      //   var userId = document.getElementById("userId").styl;
+      // }
     },
     mounted: function() {
       var userId = document.getElementById("userId").innerHTML;
@@ -621,7 +628,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     }.bind(this));
 
-   
+
+    // go through rides, if it's liked, make it green, else, black
+    // $.get("/api/v1/rides/", function(response) {
+    //         if (response.likes.length > 0) {
+    //         for (var i = 0; i < response.likes.length; i++) {
+    //         // console.log(response.likes[i].user_id.toString() === userId);
+    //           if (response.likes[i].user_id.toString() === userId){
+    //             document.getElementById("like" + rideId).style.color = '#4ab678';
+    //           }
+    //           else {
+    //             document.getElementById("like" + rideId).style.color = 'black';
+    //           } 
+    //         } 
+    //         }
+    //       });
+
     },
 
     computed: {
