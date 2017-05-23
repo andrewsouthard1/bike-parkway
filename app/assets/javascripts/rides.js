@@ -478,9 +478,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
       addComment: function(rideId) {
         var commentText = document.getElementById(rideId).value;
         var commentData = {'comment': commentText};
-        if (document.getElementById('comment' + rideId)) {
-          document.getElementById('comment' + rideId).innerHTML += '<div>' + commentText + '</div>' ;
-        }
+        var userId = document.getElementById("userId").innerHTML;
+        $.get("/api/v1/users/" + userId, function(response) {
+          var userFirstName = response.firstName;
+          if (document.getElementById('comment' + rideId)) {
+            console.log("<a href='/users/" + userId.toString() + "'> ");
+            document.getElementById('comment' + rideId).innerHTML += '<div>' + "<a href='/users/" + userId.toString() + "'> " + userFirstName + "</a> " + commentText + '</div>' ;
+          }
+        });
         $.ajax({
           url: '/api/v1/rides/' + rideId, 
           method: "PUT",
@@ -513,9 +518,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               if (response.likes[i].user_id.toString() === userId){
                 document.getElementById("like" + rideId).style.color = '#4ab678';
               }
-              else {
-                document.getElementById("like" + rideId).style.color = 'black';
-              } 
+      
             } 
             }
           });
@@ -593,7 +596,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
               miles: response[i].miles,
               date: rideDateString,
               timeRidden: rideDate,
-              rideComments: response[i].comments
+              rideComments: response[i].comments,
+              likes: response[i].likes
             });
 
           }
@@ -620,29 +624,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 miles: response[j].miles,
                 date: rideDateString,
                 timeRidden: rideDate,
-                rideComments: response[j].comments
+                rideComments: response[j].comments,
+                likes: response[j].likes
               });
             }
           }
         }
       }
     }.bind(this));
-
-
-    // go through rides, if it's liked, make it green, else, black
-    // $.get("/api/v1/rides/", function(response) {
-    //         if (response.likes.length > 0) {
-    //         for (var i = 0; i < response.likes.length; i++) {
-    //         // console.log(response.likes[i].user_id.toString() === userId);
-    //           if (response.likes[i].user_id.toString() === userId){
-    //             document.getElementById("like" + rideId).style.color = '#4ab678';
-    //           }
-    //           else {
-    //             document.getElementById("like" + rideId).style.color = 'black';
-    //           } 
-    //         } 
-    //         }
-    //       });
 
     },
 

@@ -17,5 +17,18 @@ json.array! @rides.each do |ride|
       json.friendship_info Friendship.where(user_id: ride.user_id)
     end 
   end
-  json.comments Comment.where(ride_id: ride.id)
+  all_comments = Comment.where(ride_id: ride.id)
+  json.comments do
+    json.array! all_comments.each do |comment|
+      json.comment_id comment.id
+      json.comment_user_id comment.user_id
+      json.comment_first_name User.find_by(id: comment.user_id).first_name
+      json.comment_last_name User.find_by(id: comment.user_id).last_name
+      json.comment_url User.find_by(id: comment.user_id).profile_picture_url
+      json.comment_text comment.comment_text
+      json.comment_created_at comment.created_at 
+      json.updated_at comment.updated_at
+    end
+  end
+  json.likes Like.where(ride_id: ride.id)
 end
