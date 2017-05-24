@@ -1,7 +1,7 @@
 class Api::V1::RidesController < ApplicationController
   def index
     @user = User.all
-    @rides = Ride.all
+    @rides = Ride.all.sort_by{|ride| ride.created_at}.reverse
     render 'index.json.jbuilder'
   end
 

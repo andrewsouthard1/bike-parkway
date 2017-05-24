@@ -7,6 +7,7 @@ json.array! @rides.each do |ride|
   json.finished ride.finished
   json.user_id ride.user_id
   json.top_five ride.top_five
+  json.created_at ride.created_at
   json.updated_at ride.updated_at
   if User.find_by(id: ride.user_id)
     json.user do

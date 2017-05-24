@@ -198,6 +198,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
         this.miles = displayMiles.toFixed(2);
         var userId = document.getElementById("userId").innerHTML;
+        // if (this.activityRides.length === 0) {
+        //   this.activityRides.push({
+        //           rideId: 222,
+        //           userId: 15,
+        //           firstName: "Kenny",
+        //           miles: 555,
+        //           date: "5/23/17",
+        //           timeRidden: Date.new()
+        //         });
+        // }
         for (var i = 0; i < this.rankings.length; i++) {
           if (this.rankings[i].userId === userId) {
             this.rankings[i].miles = displayMiles.toFixed(2);
@@ -206,10 +216,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var rideDate = new Date();
 
         $.get("/api/v1/users/" + userId, function(response) {
+          if (response.user_rides.length === 1) {
+            this.activityRides.push({
+                  rideId: response.user_rides.id,
+                  userId: userId,
+                  firstName: response.firstName,
+                  miles: response.user_rides.miles,
+                  date: rideDateString,
+                  timeRidden: rideDate
+                });
+          } else {
           for (var i = response.user_rides.length - 1; i > 0; i--) {    
               if (response.user_rides[i].id === ride.id) {
+                console.log("THIS HIT");
                 var rideDate = new Date(response.user_rides[i].updated_at);
                 var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+                
                 this.activityRides.push({
                   rideId: response.user_rides[i].id,
                   userId: userId,
@@ -221,6 +243,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 break;
             }
           }
+        }
 
         }.bind(this));
       },
@@ -440,21 +463,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
 
       makeRankingsLifetime: function() {
-        var goneThroughUserInfo = false;
         var userId = document.getElementById("userId").innerHTML;
         $.get("/api/v1/friendships/" + userId, function(response) {
           
           this.rankings = [];
-          for (var i = 0; i < response.length; i++) {
-            if (!goneThroughUserInfo) {
-              this.rankings.push({
-                userId: userId,
-                firstName: response[i].user_first_name,
-                miles: parseFloat(response[i].user_miles.toFixed(2))
-              });
-              goneThroughUserInfo = true;
-            } 
-            
+          for (var i = 0; i < response.length; i++) { 
             this.rankings.push({
               userId: response[i].friend_id,
               firstName: response[i].friend_first_name,
@@ -462,17 +475,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
             });
           }
         }.bind(this));        
+        $.get("/api/v1/users/" + userId, function(response) {
+          this.rankings.push({
+            userId: response.id,
+            firstName: response.firstName,
+            miles: parseFloat(response.miles.toFixed(2))              
+          });
+        }.bind(this));
 
-        if (!goneThroughUserInfo) {
-          $.get("/api/v1/users/" + userId, function(response) {
-            this.rankings.push({
-              userId: response.id,
-              firstName: response.firstName,
-              miles: parseFloat(response.miles.toFixed(2))              
-            });
-            goneThroughUserInfo = true;
-          }.bind(this));
-        }
       },
 
       addComment: function(rideId) {
@@ -482,8 +492,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $.get("/api/v1/users/" + userId, function(response) {
           var userFirstName = response.firstName;
           if (document.getElementById('comment' + rideId)) {
-            console.log("<a href='/users/" + userId.toString() + "'> ");
-            document.getElementById('comment' + rideId).innerHTML += '<div>' + "<a href='/users/" + userId.toString() + "'> " + userFirstName + "</a> " + commentText + '</div>' ;
+            document.getElementById('comment' + rideId).innerHTML += '<div class="commentClass">' + "<a href='/users/" + userId.toString() + "'> " + userFirstName + "</a> " + commentText + '</div>' ;
           }
         });
         $.ajax({
@@ -579,6 +588,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       
       // get rides from current user
       var userFriends = {};
+      var hasRun = false;
       for (var i = 0; i < response.length; i++) {
         
         // ride is finished and the user is not null
@@ -588,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               var friendId = response[i].user.friendship_info[j].friend_id;
               userFriends[friendId] = 1;
             }
-            var rideDate = new Date(response[i].updated_at);
+            var rideDate = new Date(response[i].created_at);
             var rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
             this.activityRides.push({
               rideId: response[i].id,
@@ -603,11 +613,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }
  
         }  
-        
       }
 
       //get rides from users friends
       userFriends = Object.keys(userFriends);
+      if (userFriends.length > 0) {
       for (i = 0; i < userFriends.length; i++) {
         for (j = 0; j < response.length; j++) {
           if (response[j].finished && response[j].user_id) {
@@ -615,9 +625,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
             if (response[j].user_id.toString() === userFriends[i]) {
               console.log("friends ride: " + response[j]);
               
-              rideDate = new Date(response[i].updated_at);
-              rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+              rideDate = new Date(response[i].created_at);
 
+              rideDateString = (rideDate.getMonth() + 1) + "/" + rideDate.getDate() + "/" + rideDate.getFullYear();
+              console.log(rideDateString);
               this.activityRides.push({
                 rideId: response[j].id,
                 firstName: response[j].user.first_name,
@@ -631,6 +642,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }
         }
       }
+    }
     }.bind(this));
 
     },
@@ -644,7 +656,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       sortedRides: function() {
         return this.activityRides.sort(function(ride1, ride2) {
-          return new Date(ride2.timeRidden) - new Date(ride1.timeRidden);
+          // return ride1.miles - ride2.miles;
+          console.log(ride2.timeRidden);
+          return new Date(ride2.rideId) - new Date(ride1.rideId);
         }.bind(this));
       }
     }

@@ -1,7 +1,5 @@
 <div id="app">
-  <%= @user.email %>
   <div id="userId"><%= @user.id %></div>
-
   <div v-for="ride in inProgressRides">
     <div class="in-progress-bar">
       <span>{{ ride.starting_location }}</span>
@@ -11,6 +9,9 @@
       <span>{{ ride.in_progress }}</span>
       <button class="btn in-progress-button" v-on:click="finishRide(ride)"><i class="fa fa-flag-checkered fa-fw" aria-hidden="true"></i>
     </div>
+  </div>
+  <div id="title-box">    
+    <p class="feature-box-header"><%= @user.first_name %>'s Miles</p>
   </div>
   <div id="userMilesBox">
     {{ miles }} MI
@@ -35,7 +36,7 @@
           </p>
         </div>
       </div>
-  </div>
+  </div>    
 
   <div id="activity-box">
     <div class="feature-box-header">Road Activity</div>
@@ -53,10 +54,12 @@
             <i class="fa fa-thumbs-up" aria-hidden="true" v-on:click="likeRide(ride.rideId)"></i>
             Like
         </div> -->
-        <input type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
+        <input class="commentBox" type="text" placeholder="Write comment" v-bind:id="ride.rideId" v-on:keyup.enter="addComment(ride.rideId)"></input>
         <div v-bind:id="'comment' + ride.rideId">
           <div v-for="comment in ride.rideComments">
-            {{ comment.profile_picture_url }}{{ comment.comment_first_name }} {{ comment.comment_text }}
+            <div class="commentClass">
+              <a v-bind:href="'/users/' + comment.comment_user_id"> {{ comment.comment_first_name }} </a> {{ comment.comment_text }}
+            </div>
           </div>
         </div>
       </div>
