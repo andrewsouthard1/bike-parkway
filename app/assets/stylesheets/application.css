@@ -90,6 +90,19 @@ body {
     color: white;
 }
 
+.ride-button {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
+  height: 60px;
+  border: 2.5px solid #282B2A;
+  font-family: 'Comfortaa', cursive;
+  font-size: 40px;
+  border-radius: 1%;
+  padding-bottom: 10px;
+}
+
 .street-line {
   border-bottom: 2px dashed white;
   width: 125px;

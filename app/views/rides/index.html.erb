@@ -6,6 +6,7 @@
   <div id="milesBox">
     <span id="rideMiles"></span> mi
   </div>
+
   <input id="origin-input" v-model="newOrigin" class="controls" type="text"
       placeholder="Enter an origin location">
 
@@ -16,13 +17,33 @@
   </div>
   <div id="save-ride">
   <% if current_user %>
-    <a class="btn btn-block" v-on:click="createRide()" href="/users/<%= current_user.id %>">Start My Ride</a>
+    <a class="btn btn-block ride-button" v-on:click="createRide()" href="/users/<%= current_user.id %>">Start My Ride</a>
   </div>
   <% else %>
-  <a class="btn btn-block" href="/login">Log In To Track Miles</a>
+  <a class="btn btn-block ride-button" href="/login">Log In To Track Miles</a>
   <% end %>
   </div>
 
+  <% if !current_user %>
+    <div id="front-page">
+      Bike Parkway
+      <i class="fa fa-bicycle" aria-hidden="true"></i>
+  </div>
+
+  <div id="front-page-buttons">
+    <a href="/login">Login</a>
+    <a href="/signup">Signup</a>
+  </div>
+  <% else %>
+    <div id="front-page">
+      Bike Parkway
+      <i class="fa fa-bicycle" aria-hidden="true"></i>
+    </div>
+
+    <div id="front-page-buttons">
+      <a href="/users/<%= current_user.id %>">Home</a>
+    </div>
+  <% end %>
 
 </div>
 
