@@ -108,7 +108,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
       displayMiles(response);
       // getWeather(getOriginLat(response), getOriginLng(response));
       me.directionsDisplay.setDirections(response);
-      window.alert('Directions service is going through');
+      console.log('Directions service is going through');
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -198,16 +198,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var displayMiles = parseFloat(this.miles) + parseFloat(ride.miles);
         this.miles = displayMiles.toFixed(2);
         var userId = document.getElementById("userId").innerHTML;
-        // if (this.activityRides.length === 0) {
-        //   this.activityRides.push({
-        //           rideId: 222,
-        //           userId: 15,
-        //           firstName: "Kenny",
-        //           miles: 555,
-        //           date: "5/23/17",
-        //           timeRidden: Date.new()
-        //         });
-        // }
         for (var i = 0; i < this.rankings.length; i++) {
           if (this.rankings[i].userId === userId) {
             this.rankings[i].miles = displayMiles.toFixed(2);

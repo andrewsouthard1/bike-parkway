@@ -22,10 +22,22 @@ hr {
   overflow: scroll;
 }
 
+#all-activities {
+  overflow: scroll;
+}
+
 #title-box {
   width: 80%;
   margin: 20px auto;
   margin-bottom: -10px;
+  font-family: 'Comfortaa', cursive;
+  border-radius: 1%;
+  border: 2.5px solid #282B2A;
+  height: 55px;
+}
+
+.title-box-writing {
+  font-size: 30px;
 }
 
 .activityRides {
