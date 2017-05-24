@@ -41,6 +41,10 @@ body {
   margin: 0 auto;
 }
 
+#signup-border {
+  border-left: 2.5px solid #282B2A;
+  padding-left: 10px;
+}
 
 .bike-icon {
   float: right;
