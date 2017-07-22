@@ -1,24 +1,7 @@
-# README
+# Bike Parkway
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Hello! Bike Parkway is a passion project of mine, providing a mile tracker for bike commuters and way to compete with friends.
 
-Things you may want to cover:
+BP uses the Google Maps API and is built on Ruby on Rails, with the Vue.js framework
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![alt text](https://i.ytimg.com/vi/jWPxcDhshDs/maxresdefault.jpg)
