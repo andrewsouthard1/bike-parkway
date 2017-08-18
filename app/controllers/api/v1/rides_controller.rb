@@ -33,27 +33,15 @@ class Api::V1::RidesController < ApplicationController
     ride = Ride.find_by(id: params[:id])
     user = User.find_by(id: ride.user_id)
     if (params[:miles])
-      if user.miles == nil
-        new_miles = ride.miles
-      else
-        new_miles = ride.miles + user.miles
-      end
-      p "new_miles#{new_miles}"
-
+      user.miles == nil ? new_miles = ride.miles : new_miles = ride.miles + user.miles
       @ride_updated = ride.update(
         in_progress: false,
         finished: true
       )
-
       @user_update = user.update(
         miles: new_miles
       )
-
-      if @ride_updated && @user_update
-        render json: {ride: "completed"} 
-      else
-        render json: {error: "error"}, status: 422
-      end
+      @ride_updated && @user_update ? render json: {ride: "completed"} : render json: {error: "error"}, status: 422
     elsif (params[:comment])
       comment = Comment.create(
         user_id: current_user.id,

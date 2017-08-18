@@ -103,7 +103,6 @@ AutocompleteDirectionsHandler.prototype.route = function() {
     if (status === 'OK') {
       displayStartButton();
       displayMiles(response);
-      // getWeather(getOriginLat(response), getOriginLng(response));
       me.directionsDisplay.setDirections(response);
       console.log('Directions service is going through');
     } else {
