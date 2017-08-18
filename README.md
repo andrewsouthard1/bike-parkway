@@ -27,31 +27,31 @@ There are many fitness tracking/direction apps out there these days. I wanted to
 
 # Code Example
 
-**Adding a comment to wall**
+**Adding a comment to Activity Feed**
 ```javascript
-      addComment: function(rideId) {
-        var commentText = document.getElementById(rideId).value;
-        var commentData = {'comment': commentText};
-        var userId = document.getElementById("userId").innerHTML;
-        $.get("/api/v1/users/" + userId, function(response) {
-          var userFirstName = response.firstName;
-          if (document.getElementById('comment' + rideId)) {
-            document.getElementById('comment' + rideId).innerHTML += '<div class="commentClass">' + "<a href='/users/" + userId.toString() + "'> " + userFirstName + "</a> " + commentText + '</div>' ;
-          }
-        });
-        $.ajax({
-          url: '/api/v1/rides/' + rideId, 
-          method: "PUT",
-          data: commentData
-        }
-        ).done( function() {
-          console.log(commentText);
-          document.getElementById(rideId).value = '';
-          console.log(document.getElementById(rideId));
-          console.log(document.getElementById(rideId).value);
+  addComment: function(rideId) {
+    var commentText = document.getElementById(rideId).value;
+    var commentData = {'comment': commentText};
+    var userId = document.getElementById("userId").innerHTML;
+    $.get("/api/v1/users/" + userId, function(response) {
+      var userFirstName = response.firstName;
+      if (document.getElementById('comment' + rideId)) {
+        document.getElementById('comment' + rideId).innerHTML += '<div class="commentClass">' + "<a href='/users/" + userId.toString() + "'> " + userFirstName + "</a> " + commentText + '</div>' ;
+      }
+    });
+    $.ajax({
+      url: '/api/v1/rides/' + rideId, 
+      method: "PUT",
+      data: commentData
+    }
+    ).done( function() {
+      console.log(commentText);
+      document.getElementById(rideId).value = '';
+      console.log(document.getElementById(rideId));
+      console.log(document.getElementById(rideId).value);
 
-        });
-      },
+    });
+  },
 ```
 
 **Writing a User class with friendships**
